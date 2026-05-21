@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "zod";
 
 const projectSchema = z.object({
   title: z.string().min(1),
@@ -18,14 +19,14 @@ const projectSchema = z.object({
   tags: z.array(z.string()),
   startDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   endDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).or(z.literal("present")).optional(),
-  githubUrl: z.string().url().optional(),
-  demoUrl: z.string().url().optional(),
+  githubUrl: z.url().optional(),
+  demoUrl: z.url().optional(),
   previewImage: z.string().startsWith("/"),
   featured: z.boolean().default(false),
   featuredOrder: z.number().int().optional(),
   techStack: z.array(z.string()),
   highlights: z.array(z.string()).max(5),
-  paperUrl: z.string().url().optional(),
+  paperUrl: z.url().optional(),
   doi: z.string().optional(),
   architecture: z.string().optional(),
 });
@@ -43,11 +44,11 @@ const publicationSchema = z.object({
     "personal-post",
   ]),
   channel: z.string(),
-  channelUrl: z.string().url().optional(),
+  channelUrl: z.url().optional(),
   publishedDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   doi: z.string().optional(),
   arxivId: z.string().optional(),
-  paperUrl: z.string().url().optional(),
+  paperUrl: z.url().optional(),
   abstract: z.string().max(1200).optional(),
   tags: z.array(z.string()),
   citationCount: z.number().int().nonnegative().optional(),
@@ -61,7 +62,7 @@ const certificationSchema = z.object({
   type: z.enum(["certification", "badge", "course", "specialization", "degree"]),
   issueDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   expiryDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).optional(),
-  verifyUrl: z.string().url().optional(),
+  verifyUrl: z.url().optional(),
   badgeImage: z.string().startsWith("/").optional(),
   verified: z.boolean().default(false),
 });
@@ -73,13 +74,13 @@ const awardSchema = z.object({
   category: z.enum(["academic", "professional", "competition", "research", "open-source"]),
   description: z.string().optional(),
   featured: z.boolean().default(false),
-  mediaUrl: z.string().url().optional(),
+  mediaUrl: z.url().optional(),
 });
 
 const experienceSchema = z.object({
   role: z.string().min(1),
   company: z.string(),
-  companyUrl: z.string().url().optional(),
+  companyUrl: z.url().optional(),
   type: z.enum(["full-time", "part-time", "contract", "freelance", "internship", "research"]),
   location: z.string(),
   startDate: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
@@ -104,14 +105,14 @@ const profileSchema = z.object({
   titles: z.array(z.string()),
   bio: z.string().max(500),
   location: z.string(),
-  email: z.string().email(),
+  email: z.email(),
   socialLinks: z.object({
-    github: z.string().url().optional(),
-    linkedin: z.string().url().optional(),
-    googleScholar: z.string().url().optional(),
-    orcid: z.string().url().optional(),
-    researchGate: z.string().url().optional(),
-    twitter: z.string().url().optional(),
+    github: z.url().optional(),
+    linkedin: z.url().optional(),
+    googleScholar: z.url().optional(),
+    orcid: z.url().optional(),
+    researchGate: z.url().optional(),
+    twitter: z.url().optional(),
   }),
   avatar: z.string().startsWith("/").optional(),
   lastUpdated: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),

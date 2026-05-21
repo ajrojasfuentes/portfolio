@@ -8,10 +8,16 @@ export const POST: APIRoute = async ({ request }) => {
     const result = ContactSchema.safeParse(body);
 
     if (!result.success) {
+      const fieldErrors: Record<string, string[]> = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path.join(".");
+        fieldErrors[key] = fieldErrors[key] ?? [];
+        fieldErrors[key].push(issue.message);
+      }
       return new Response(
         JSON.stringify({
           success: false,
-          errors: result.error.flatten().fieldErrors,
+          errors: fieldErrors,
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
