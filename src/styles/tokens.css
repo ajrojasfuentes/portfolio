@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Base Surfaces ── */
+  --color-bg-base: #0d1117;
+  --color-bg-surface-0: #161b22;
+  --color-bg-surface-1: #21262d;
+  --color-bg-surface-2: #30363d;
+  --color-bg-elevated: #1c2128;
+
+  /* ── Text ── */
+  --color-text-primary: #e6edf3;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #484f58;
+  --color-text-link: #58a6ff;
+
+  /* ── Semantic IDE Token Colors ── */
+  --color-token-blue: #79c0ff;
+  --color-token-purple: #d2a8ff;
+  --color-token-teal: #39d353;
+  --color-token-orange: #ffa657;
+  --color-token-red: #ff7b72;
+  --color-token-yellow: #e3b341;
+  --color-token-cyan: #56d364;
+
+  /* ── Interactive States ── */
+  --color-interactive-hover: rgba(121, 192, 255, 0.08);
+  --color-interactive-active: rgba(121, 192, 255, 0.16);
+  --color-focus-ring: #58a6ff;
+  --color-tab-active: #79c0ff;
+  --color-selection: rgba(121, 192, 255, 0.2);
+
+  /* ── Section Accent Map ── */
+  --color-section-about: var(--color-token-teal);
+  --color-section-projects: var(--color-token-blue);
+  --color-section-certifications: var(--color-token-purple);
+  --color-section-publications: var(--color-token-orange);
+  --color-section-awards: var(--color-token-red);
+}
+
+/* Light theme override */
+[data-theme="light"] {
+  --color-bg-base: #ffffff;
+  --color-bg-surface-0: #f6f8fa;
+  --color-bg-surface-1: #eaeef2;
+  --color-bg-surface-2: #d0d7de;
+  --color-bg-elevated: #ffffff;
+  --color-text-primary: #1f2328;
+  --color-text-secondary: #57606a;
+  --color-text-muted: #8c959f;
+  --color-text-link: #0969da;
+  --color-token-blue: #0969da;
+  --color-token-purple: #8250df;
+  --color-token-teal: #1a7f37;
+  --color-token-orange: #bc4c00;
+  --color-token-red: #cf222e;
+  --color-token-yellow: #9e8a1f;
+  --color-token-cyan: #1a7f37;
+}

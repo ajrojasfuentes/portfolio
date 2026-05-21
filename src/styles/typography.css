@@ -1,0 +1,86 @@
+/* ── Font Face Declarations ── */
+/* Self-hosted fonts - zero Google Fonts calls */
+
+/* Geist Sans (body text) */
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist/Geist-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("/fonts/Geist/Geist-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Mono (display / headers) */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/Geist/GeistMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* JetBrains Mono (UI chrome / code blocks) */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono/JetBrainsMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono/JetBrainsMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Type Scale ── */
+.text-xs {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.text-sm {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.text-base {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.text-md {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.text-lg {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.text-xl {
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+.text-2xl {
+  font-size: 36px;
+  line-height: 1.3;
+}
+
+.text-3xl {
+  font-size: 52px;
+  line-height: 1.1;
+}

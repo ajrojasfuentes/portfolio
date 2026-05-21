@@ -1,0 +1,49 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  section?: string;
+}
+
+const { title, description, section = "portfolio" } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} section={section}>
+  <div class="ide-layout">
+    <div class="ide-title-bar">
+      <span>ajrojasfuentes.dev</span>
+      <span style="margin-left: auto;">— Professional Portfolio</span>
+    </div>
+
+    <div class="ide-activity-bar">
+      <!-- ActivityBar island will mount here -->
+    </div>
+
+    <div class="ide-main-area">
+      <aside class="ide-sidebar">
+        <!-- FileExplorer island will mount here -->
+      </aside>
+
+      <main class="ide-editor">
+        <div class="ide-tab-bar">
+          <!-- TabManager island will mount here -->
+        </div>
+
+        <div class="ide-breadcrumb">
+          <a href="/">portfolio</a>
+          <span>/</span>
+          <span>{section}</span>
+        </div>
+
+        <slot />
+      </main>
+    </div>
+
+    <div class="ide-status-bar">
+      <span>{section}</span>
+      <span style="margin-left: auto;">Ready</span>
+    </div>
+  </div>
+</BaseLayout>
