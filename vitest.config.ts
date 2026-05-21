@@ -6,6 +6,7 @@ export default defineConfig({
     globals: true,
     include: ["tests/unit/**/*.{test,spec}.{ts,tsx}", "src/**/*.{test,spec}.{ts,tsx}"],
     exclude: ["node_modules", "dist", ".astro"],
+    passWithNoTests: true,
   },
   resolve: {
     alias: {
