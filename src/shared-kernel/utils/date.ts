@@ -1,5 +1,3 @@
-import type { CollectionEntry } from "astro:content";
-
 export function formatDate(dateString: string): string {
   const [year, month] = dateString.split("-");
   const date = new Date(Number(year), Number(month) - 1);

@@ -8,8 +8,14 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@islands/*": ["src/islands/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@components/*": ["src/components/*"],
       "@content/*": ["src/content/*"],
-      "@sk/*": ["src/shared-kernel/*"]
+      "@sk/*": ["src/shared-kernel/*"],
+      "@modules/*": ["src/modules/*"],
+      "@styles/*": ["src/styles/*"],
+      "@lib/*": ["src/lib/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

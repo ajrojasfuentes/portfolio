@@ -2,17 +2,16 @@
 import { ClientRouter } from "astro:transitions";
 
 export interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  section?: string;
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+  section?: string | undefined;
 }
 
 const {
   title = "Andres Rojas Fuentes — Data Automation & AI Engineer",
   description = "High-performance personal portfolio for a professional at the intersection of Data Automation & AI Engineering, Computer Engineering, and Scientific Research.",
   image = "/images/og/default.png",
-  section = "portfolio",
 } = Astro.props;
 
 const siteUrl = "https://ajrojasfuentes.dev";
@@ -51,6 +50,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 
     <!-- Theme script (prevents FOUC) -->
     <script is:inline>
+      /* eslint-disable @typescript-eslint/explicit-function-return-type */
       (function () {
         const theme = localStorage.getItem("theme");
         const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -65,9 +65,8 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
     <!-- Astro View Transitions -->
     <ClientRouter />
 
-    <!-- Global styles -->
+    <!-- Critical CSS (prevents FOUC) -->
     <style>
-      /* Critical CSS inline */
       html { color-scheme: dark; }
       [data-theme="light"] { color-scheme: light; }
       body {
@@ -76,6 +75,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
         background-color: #0d1117;
         color: #e6edf3;
         font-family: system-ui, -apple-system, sans-serif;
+      }
+      [data-theme="light"] body {
+        background-color: #ffffff;
+        color: #1f2328;
       }
     </style>
   </head>
@@ -88,7 +91,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 </html>
 
 <style is:global>
-  @import "../styles/globals.css";
-  @import "../styles/typography.css";
-  @import "../styles/ide-chrome.css";
+  @import "@styles/globals.css";
+  @import "@styles/typography.css";
+  @import "@styles/ide-chrome.css";
 </style>

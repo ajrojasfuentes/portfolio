@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import ThemeToggle from "@islands/shell/ThemeToggle";
 
 export interface Props {
   title?: string;
@@ -18,17 +19,17 @@ const { title, description, section = "portfolio" } = Astro.props;
     </div>
 
     <div class="ide-activity-bar">
-      <!-- ActivityBar island will mount here -->
+      <!-- ActivityBar island will mount here in Phase 4 -->
     </div>
 
     <div class="ide-main-area">
       <aside class="ide-sidebar">
-        <!-- FileExplorer island will mount here -->
+        <!-- FileExplorer island will mount here in Phase 4 -->
       </aside>
 
       <main class="ide-editor">
         <div class="ide-tab-bar">
-          <!-- TabManager island will mount here -->
+          <!-- TabManager island will mount here in Phase 4 -->
         </div>
 
         <div class="ide-breadcrumb">
@@ -43,7 +44,10 @@ const { title, description, section = "portfolio" } = Astro.props;
 
     <div class="ide-status-bar">
       <span>{section}</span>
-      <span style="margin-left: auto;">Ready</span>
+      <span class="flex items-center gap-2" style="margin-left: auto;">
+        <span>Ready</span>
+        <ThemeToggle client:load />
+      </span>
     </div>
   </div>
 </BaseLayout>

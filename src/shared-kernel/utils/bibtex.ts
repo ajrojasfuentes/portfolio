@@ -9,7 +9,9 @@ export function generateBibTeX(publication: {
 }): string {
   const year = publication.publishedDate.split("-")[0];
   const authorField = publication.authors.join(" and ");
-  const key = `${publication.authors[0].split(" ").pop()?.toLowerCase() ?? "author"}${year}`;
+  const firstAuthor = publication.authors[0];
+  const authorLastName = firstAuthor?.split(" ").pop()?.toLowerCase() ?? "author";
+  const key = `${authorLastName}${year}`;
 
   let entryType = "@misc";
   switch (publication.type) {
