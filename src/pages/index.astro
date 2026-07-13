@@ -1,17 +1,216 @@
 ---
-import IDELayout from "@/layouts/IDELayout.astro";
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import { Reveal } from '@/components/ui/Reveal';
+import { TiltCard } from '@/components/ui/TiltCard';
+import { ACCENTS, hexToRgba } from '@/lib/constants';
+import { render } from 'astro:content';
+
+import {
+  getSortedProjects,
+  getSortedPublications,
+  getSortedExperience,
+  getSortedCertifications,
+  getSortedAccomplishments,
+} from '@/lib/content';
+
+const projects = await getSortedProjects();
+const publications = await getSortedPublications();
+const experience = await getSortedExperience();
+const certifications = await getSortedCertifications();
+const accomplishments = await getSortedAccomplishments();
+
+import { 
+  MapPin, ShieldCheck, ArrowUpRight, Code2, FlaskConical, Database, Network 
+} from 'lucide-react';
 ---
 
-<IDELayout title="Andres Rojas Fuentes — Portfolio" section="home">
-  <div style="padding: 48px 0;">
-    <h1 style="font-family: 'Geist Mono', monospace; font-size: 52px; line-height: 1.1; color: var(--color-text-primary); letter-spacing: 0.05em;">
-      AJ ROJAS FUENTES
-    </h1>
-    <p style="font-family: 'Geist', sans-serif; font-size: 16px; color: var(--color-text-secondary); margin-top: 16px; max-width: 600px; line-height: 1.7;">
-      Data Automation & AI Engineer · Computer Engineer · Scientific Researcher
-    </p>
-    <p style="font-family: 'Geist', sans-serif; font-size: 16px; color: var(--color-text-secondary); margin-top: 24px;">
-      Portfolio initialization complete. Phase 0: Foundation & Tooling deployed.
-    </p>
-  </div>
-</IDELayout>
+<BaseLayout title="Anthony Rojas Fuentes | Portfolio">
+
+  {/* HERO SECTION */}
+  <section id="home" class="relative min-h-[86vh] flex items-center pt-20">
+    <div class="absolute pointer-events-none rounded-full w-[560px] h-[560px] left-[20%] top-[25%] blur-[120px]" style={`background: ${hexToRgba(ACCENTS.home, 0.16)}`}></div>
+    <div class="absolute pointer-events-none rounded-full w-[460px] h-[460px] right-[5%] top-[55%] blur-[110px]" style={`background: ${hexToRgba(ACCENTS.publications, 0.14)}`}></div>
+
+    <div class="grid md:grid-cols-2 gap-14 items-center w-full relative z-10">
+      <div>
+        <Reveal client:load>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border font-mono text-xs mb-6" style={`border-color: ${hexToRgba(ACCENTS.home, 0.35)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.08)}`}>
+            <span class="w-1.5 h-1.5 rounded-full animate-pulse" style={`background-color: ${ACCENTS.home}`}></span>
+            Open to engineering & research roles
+          </div>
+        </Reveal>
+
+        <Reveal client:load delay={80}>
+          <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.05] text-white mb-5">
+            Anthony Rojas Fuentes
+          </h1>
+        </Reveal>
+        
+        <Reveal client:load delay={140}>
+          <div class="flex flex-wrap gap-2 mb-6">
+             <span class="font-mono text-xs px-2.5 py-1 rounded-md border inline-block text-slate-300 border-slate-700 bg-slate-800/30">Software Engineer</span>
+             <span class="font-mono text-xs px-2.5 py-1 rounded-md border inline-block text-slate-300 border-slate-700 bg-slate-800/30">Data Automation & AI Engineer</span>
+             <span class="font-mono text-xs px-2.5 py-1 rounded-md border inline-block text-slate-300 border-slate-700 bg-slate-800/30">Scientific Researcher</span>
+          </div>
+        </Reveal>
+
+        <Reveal client:load delay={200}>
+          <p class="text-lg text-slate-300 max-w-lg leading-relaxed mb-8">
+            I build systems that automate data, learn from it, and hold up under peer review.
+          </p>
+        </Reveal>
+        
+        <Reveal client:load delay={320}>
+          <div class="flex items-center gap-2 text-slate-400 text-sm font-mono">
+            <MapPin size={16} /> Cartago, Costa Rica
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  </section>
+
+  {/* EXPERIENCE */}
+  <section id="experience" class="py-20">
+    <SectionHeading eyebrow="Career Timeline" title="Experience" color={ACCENTS.experience} />
+    <div class="max-w-3xl">
+      <div class="relative border-l-2 ml-3 md:ml-0" style="border-color: var(--color-border-soft)">
+        {experience.map(async (exp, i) => {
+          const { Content } = await render(exp);
+          return (
+            <Reveal client:visible delay={i * 100}>
+              <div class="mb-10 ml-8 relative last:mb-0 group">
+                <div class="absolute -left-[41px] top-1 w-4 h-4 rounded-full border-2 transition-transform duration-300 group-hover:scale-125 group-hover:bg-sky-400/20" style={`background-color: var(--color-bg); border-color: ${ACCENTS.experience}`}></div>
+                <div class="rounded-2xl border p-6 transition-colors group-hover:border-sky-500/30" style="background-color: var(--color-surface); border-color: var(--color-border-soft)">
+                  <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-3">
+                    <div>
+                      <h3 class="font-display text-lg font-bold text-white">{exp.data.role}</h3>
+                      <p class="font-medium" style={`color: ${ACCENTS.experience}`}>{exp.data.company}</p>
+                    </div>
+                    <span class="font-mono text-xs px-3 py-1 rounded-full border text-slate-400 whitespace-nowrap" style="border-color: var(--color-border-soft)">
+                      {exp.data.period}
+                    </span>
+                  </div>
+                  <div class="text-slate-400 leading-relaxed prose prose-invert max-w-none prose-sm">
+                    <Content />
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          )
+        })}
+      </div>
+    </div>
+  </section>
+
+  {/* PROJECTS */}
+  <section id="projects" class="py-20">
+    <SectionHeading eyebrow="Selected Work" title="Projects" color={ACCENTS.projects} />
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8 perspective-1000">
+      {projects.map(async (p, i) => {
+        const { Content } = await render(p);
+        return (
+          <Reveal client:visible delay={i * 100}>
+            <TiltCard client:visible className="h-full w-full">
+              <div class="rounded-2xl border overflow-hidden flex flex-col h-full shadow-xl" style="background-color: var(--color-surface); border-color: var(--color-border-soft)">
+                <div class="relative h-36 flex items-center justify-center overflow-hidden" style="background-color: var(--color-surface-2)">
+                  <div class="absolute inset-0 opacity-50" style={`background-image: repeating-linear-gradient(45deg, ${hexToRgba(ACCENTS.projects, 0.08)} 0px, ${hexToRgba(ACCENTS.projects, 0.08)} 1px, transparent 1px, transparent 14px)`}></div>
+                  <div class="absolute w-20 h-20 rounded-full" style={`background: ${hexToRgba(ACCENTS.projects, 0.2)}; filter: blur(30px)`}></div>
+                  <span class="absolute top-3 right-3 font-mono text-[10px] uppercase px-2 py-1 rounded-full border z-10 backdrop-blur-sm" style={`color: ${ACCENTS.projects}; border-color: ${hexToRgba(ACCENTS.projects, 0.4)}; background-color: ${hexToRgba(ACCENTS.projects, 0.1)}`}>
+                    {p.data.status}
+                  </span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                  <p class="font-mono text-[11px] uppercase tracking-wider mb-2" style="color: var(--color-text-muted)">{p.data.category}</p>
+                  <h3 class="font-display text-lg font-bold text-white mb-2">{p.data.title}</h3>
+                  <div class="text-sm text-slate-400 mb-5 flex-1">
+                    <Content />
+                  </div>
+                  <div class="flex flex-wrap gap-2 mb-5">
+                    {p.data.tech.map((t) => (
+                      <span class="font-mono text-xs px-2.5 py-1 rounded-md border inline-block text-slate-300 border-slate-700 bg-slate-800/30">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TiltCard>
+          </Reveal>
+        )
+      })}
+    </div>
+  </section>
+
+  {/* PUBLICATIONS */}
+  <section id="publications" class="py-20">
+    <SectionHeading eyebrow="Research & Publications" title="Publications" color={ACCENTS.publications} />
+    <div class="flex flex-col gap-6 max-w-4xl">
+      {publications.map(async (pub, i) => {
+        const { Content } = await render(pub);
+        return (
+          <Reveal client:visible delay={i * 100}>
+            <div class="rounded-2xl border p-6 md:p-7 transition-colors hover:border-violet-500/30" style="background-color: var(--color-surface); border-color: var(--color-border-soft)">
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <span class="font-mono text-xs px-2.5 py-1 rounded-md border inline-block" style={`color: ${ACCENTS.publications}; border-color: ${hexToRgba(ACCENTS.publications, 0.35)}; background-color: ${hexToRgba(ACCENTS.publications, 0.08)}`}>{pub.data.type}</span>
+                <span class="font-mono text-xs text-slate-500 flex items-center gap-1.5">
+                  {pub.data.venue}
+                </span>
+              </div>
+              <h3 class="font-display text-xl font-bold text-white mb-2">{pub.data.title}</h3>
+              <p class="text-sm text-slate-400 mb-3">{pub.data.authors}</p>
+              <div class="text-slate-300 leading-relaxed mb-5">
+                <Content />
+              </div>
+            </div>
+          </Reveal>
+        )
+      })}
+    </div>
+  </section>
+
+  {/* CERTIFICATIONS */}
+  <section id="certifications" class="py-20">
+    <SectionHeading eyebrow="Credentials" title="Certifications" color={ACCENTS.certifications} />
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {certifications.map((cert, i) => (
+        <Reveal client:visible delay={i * 80}>
+          <div class="rounded-2xl border p-5 h-full flex flex-col transition-transform hover:-translate-y-1 hover:border-rose-500/30" style="background-color: var(--color-surface); border-color: var(--color-border-soft)">
+            <div class="flex items-start justify-between mb-4">
+              <span class="w-10 h-10 rounded-xl flex items-center justify-center shadow-inner" style={`background-color: ${hexToRgba(ACCENTS.certifications, 0.12)}`}>
+                <ShieldCheck size={20} color={ACCENTS.certifications} />
+              </span>
+            </div>
+            <h3 class="font-display font-bold text-white mb-1 leading-snug">{cert.data.name}</h3>
+            <p class="text-sm text-slate-400 mb-4">{cert.data.issuer}</p>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+
+  {/* ACCOMPLISHMENTS */}
+  <section id="accomplishments" class="py-20 mb-10">
+    <SectionHeading eyebrow="Recognition" title="Accomplishments" color={ACCENTS.accomplishments} />
+    <div class="grid md:grid-cols-2 gap-4">
+      {accomplishments.map(async (acc, i) => {
+        const { Content } = await render(acc);
+        return (
+          <Reveal client:visible delay={i * 80}>
+            <div class="flex items-start gap-4 rounded-2xl border p-5 h-full transition-transform hover:-translate-x-1 hover:border-emerald-500/30" style="background-color: var(--color-surface); border-color: var(--color-border-soft)">
+              <span class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={`background-color: ${hexToRgba(ACCENTS.accomplishments, 0.12)}`}>
+                <ArrowUpRight size={18} color={ACCENTS.accomplishments} />
+              </span>
+              <div>
+                <h3 class="font-medium text-white mb-1">{acc.data.title}</h3>
+                <div class="text-sm text-slate-400">
+                  <Content />
+                </div>
+                {acc.data.date && <p class="font-mono text-[10px] text-slate-600 mt-2">{acc.data.date}</p>}
+              </div>
+            </div>
+          </Reveal>
+        )
+      })}
+    </div>
+  </section>
+
+</BaseLayout>
