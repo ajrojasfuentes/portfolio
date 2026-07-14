@@ -23,9 +23,13 @@
 }
 
 /* Base configuration */
-html, body { 
+html { 
   scroll-behavior: smooth;
   background-color: var(--color-bg);
+}
+
+body {
+  background-color: transparent;
   color: var(--color-text-primary);
   font-family: var(--font-body);
 }
