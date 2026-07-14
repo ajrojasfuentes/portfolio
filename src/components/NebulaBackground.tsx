@@ -421,13 +421,19 @@ export const NebulaBackground = () => {
         `}
       </style>
 
-      {/* Nebula Elements — no mix-blend-screen (invisible on dark bg), use normal blending */}
+      {/* Nebula Elements — deep space palette: purple, pink, blue, hint of teal */}
       {!reducedMotion && (
         <>
-          <div className="nebula-1 absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full pointer-events-none" style={{ background: hexToRgba(ACCENTS.home, 0.15), filter: 'blur(120px)' }} />
-          <div className="nebula-2 absolute top-[-10%] right-[-20%] w-[70vw] h-[70vw] rounded-full pointer-events-none" style={{ background: hexToRgba(ACCENTS.publications, 0.12), filter: 'blur(130px)' }} />
-          <div className="nebula-3 absolute bottom-[-20%] left-[10%] w-[50vw] h-[50vw] rounded-full pointer-events-none" style={{ background: hexToRgba(ACCENTS.experience, 0.12), filter: 'blur(100px)' }} />
-          <div className="nebula-4 absolute bottom-[0%] right-[0%] w-[60vw] h-[60vw] rounded-full pointer-events-none" style={{ background: hexToRgba(ACCENTS.projects, 0.10), filter: 'blur(140px)' }} />
+          {/* Deep purple — top left */}
+          <div className="nebula-1 absolute top-[-20%] left-[-10%] w-[60vw] h-[60vw] rounded-full pointer-events-none" style={{ background: 'rgba(88, 28, 135, 0.18)', filter: 'blur(130px)' }} />
+          {/* Muted pink — top right */}
+          <div className="nebula-2 absolute top-[-10%] right-[-15%] w-[55vw] h-[55vw] rounded-full pointer-events-none" style={{ background: 'rgba(136, 19, 98, 0.12)', filter: 'blur(140px)' }} />
+          {/* Dark blue — center right, dominant */}
+          <div className="nebula-3 absolute top-[30%] right-[-20%] w-[65vw] h-[65vw] rounded-full pointer-events-none" style={{ background: 'rgba(30, 58, 138, 0.14)', filter: 'blur(120px)' }} />
+          {/* Blue — bottom left */}
+          <div className="nebula-4 absolute bottom-[-25%] left-[5%] w-[55vw] h-[55vw] rounded-full pointer-events-none" style={{ background: 'rgba(37, 99, 235, 0.10)', filter: 'blur(130px)' }} />
+          {/* Subtle teal-blue hint — bottom right corner */}
+          <div className="nebula-1 absolute bottom-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full pointer-events-none" style={{ background: 'rgba(22, 78, 99, 0.08)', filter: 'blur(120px)' }} />
         </>
       )}
 
