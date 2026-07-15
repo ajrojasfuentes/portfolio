@@ -21,9 +21,9 @@ export const hexToRgba = (hex: string, alpha = 1) => {
 
 export const NAV_LINKS = [
   { name: 'Home', href: '#home' },
+  { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
   { name: 'Publications', href: '#publications' },
-  { name: 'Experience', href: '#experience' },
   { name: 'Certifications', href: '#certifications' },
   { name: 'Accomplishments', href: '#accomplishments' },
 ];

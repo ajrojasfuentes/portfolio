@@ -33,6 +33,8 @@ const experience = defineCollection({
     role: z.string(),
     company: z.string(),
     period: z.string(),
+    category: z.enum(['job', 'volunteering', 'project', 'milestone']).default('job'),
+    shortDesc: z.string().optional(),
     order: z.number().default(0),
   })
 });
