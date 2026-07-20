@@ -59,19 +59,19 @@ const MilestoneNode = ({ entry, index }: { entry: TimelineEntry; index: number }
       className="relative w-full z-30 py-2"
     >
       <div 
-        className="absolute left-[30px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full border-2 shadow-xl z-10"
+        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border-2 shadow-xl z-10"
         style={{ borderColor: cat.color, backgroundColor: 'var(--color-bg)', boxShadow: `0 0 20px ${cat.glow}` }}
       >
-        <Icon className="w-5 h-5" style={{ color: cat.color }} />
+        <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: cat.color }} />
       </div>
 
-      <div className="ml-[70px] md:ml-[100px] pr-4">
+      <div className="ml-[50px] md:ml-[100px] w-[calc(100%-66px)] md:w-auto md:pr-4">
         <div className="px-4 py-3 rounded-xl border inline-flex flex-col shadow-lg backdrop-blur-md"
              style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border-soft)' }}>
-          <span className="text-white font-bold text-sm leading-tight">{entry.role}</span>
-          <span className="text-slate-400 text-xs font-mono mt-0.5 capitalize">{entry.period} • {entry.company}</span>
+          <span className="text-white font-bold text-sm md:text-base leading-tight">{entry.role}</span>
+          <span className="text-slate-400 text-[10px] md:text-xs font-mono mt-0.5 capitalize">{entry.period} • {entry.company}</span>
           {entry.shortDesc && (
-            <p className="text-slate-300 text-xs mt-2 leading-relaxed max-w-2xl">
+            <p className="text-slate-300 text-[11px] md:text-xs mt-2 leading-relaxed max-w-2xl">
               {entry.shortDesc}
             </p>
           )}
@@ -89,7 +89,7 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
     <div className="relative w-full z-20 group py-2">
       {/* Spine Point */}
       <div
-        className="absolute left-[30px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 z-10 transition-all duration-300"
+        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full border-4 z-10 transition-all duration-300"
         style={{
           borderColor: cat.color,
           backgroundColor: 'var(--color-bg)',
@@ -99,9 +99,8 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
 
       {/* Connector Line */}
       <div
-        className="absolute left-[30px] md:left-[60px] top-1/2 -translate-y-1/2 h-[2px] z-0"
+        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-y-1/2 h-[2px] z-0 w-[26px] md:w-[40px]"
         style={{
-          width: '40px',
           backgroundImage: `linear-gradient(to right, ${cat.color}60, transparent)`,
         }}
       />
@@ -112,7 +111,7 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ delay: index * 0.1, type: 'spring', stiffness: 100 }}
-        className="ml-[70px] md:ml-[100px] mr-4 md:mr-8 w-full md:max-w-[800px] cursor-pointer"
+        className="ml-[50px] md:ml-[100px] w-[calc(100%-66px)] md:w-auto md:mr-8 md:max-w-[800px] cursor-pointer"
         style={{ perspective: '1500px' }}
         onClick={onFlip}
       >
@@ -139,23 +138,23 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
               style={{ background: `linear-gradient(to bottom, ${cat.color}, transparent)` }}
             />
 
-            <div className="p-5 flex flex-col">
+            <div className="p-4 md:p-5 flex flex-col">
               {/* Header */}
-              <div className="flex justify-between items-start mb-4">
+              <div className="flex justify-between items-start mb-3 md:mb-4">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-xl border flex items-center justify-center shadow-inner shrink-0"
+                    className="w-8 h-8 md:w-10 md:h-10 rounded-xl border flex items-center justify-center shadow-inner shrink-0"
                     style={{ backgroundColor: 'var(--color-surface-2)', borderColor: 'var(--color-border-soft)' }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: cat.color }} />
+                    <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: cat.color }} />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-base leading-tight">{entry.role}</h3>
-                    <p className="text-sm font-medium" style={{ color: cat.color }}>{entry.company}</p>
+                    <h3 className="text-white font-bold text-sm md:text-base leading-tight">{entry.role}</h3>
+                    <p className="text-xs md:text-sm font-medium" style={{ color: cat.color }}>{entry.company}</p>
                   </div>
                 </div>
                 <span
-                  className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border shrink-0 ml-2"
+                  className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-md border shrink-0 ml-2"
                   style={{
                     color: cat.color,
                     borderColor: `${cat.color}30`,
@@ -168,20 +167,20 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
 
               {/* Duration Badge */}
               <div
-                className="inline-flex items-center gap-2 rounded-lg px-3 py-2 w-fit mb-4 border"
+                className="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 md:px-3 md:py-2 w-fit mb-3 md:mb-4 border"
                 style={{ backgroundColor: 'var(--color-surface-2)', borderColor: 'var(--color-border-soft)' }}
               >
-                <CalendarDays className="w-4 h-4" style={{ color: cat.color }} />
-                <span className="text-sm font-mono text-slate-300">{entry.period}</span>
+                <CalendarDays className="w-3 h-3 md:w-4 md:h-4" style={{ color: cat.color }} />
+                <span className="text-xs md:text-sm font-mono text-slate-300">{entry.period}</span>
               </div>
 
               {/* Short Description & Interactive Hint */}
-              <div className="flex items-end justify-between gap-4">
+              <div className="flex items-end justify-between gap-2 md:gap-4 mt-auto">
                 {entry.shortDesc && (
-                  <p className="text-slate-400 text-sm leading-relaxed max-w-[85%]">{entry.shortDesc}</p>
+                  <p className="text-slate-400 text-xs md:text-sm leading-relaxed max-w-[85%]">{entry.shortDesc}</p>
                 )}
                 <div className="flex flex-col items-center gap-1 opacity-50 group-hover:opacity-100 transition-opacity shrink-0">
-                  <MousePointerClick className="w-5 h-5 text-slate-300 animate-bounce" />
+                  <MousePointerClick className="w-4 h-4 md:w-5 md:h-5 text-slate-300 animate-bounce" />
                 </div>
               </div>
             </div>
@@ -239,7 +238,7 @@ export default function ExperienceTimeline({ entries }: { entries: TimelineEntry
       <div className="relative w-full flex flex-col gap-8">
         {/* Vertical Spine Line */}
         <div
-          className="absolute left-[30px] md:left-[60px] top-0 bottom-0 w-[2px] -translate-x-1/2 z-0 rounded-full overflow-hidden"
+          className="absolute left-[24px] md:left-[60px] top-0 bottom-0 w-[2px] -translate-x-1/2 z-0 rounded-full overflow-hidden"
           style={{ backgroundColor: 'var(--color-border-soft)' }}
         >
           {/* Animated Energy Flow */}

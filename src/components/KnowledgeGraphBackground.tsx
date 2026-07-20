@@ -39,7 +39,7 @@ export const KnowledgeGraphBackground = () => {
       }
     };
 
-    const resizeAndInit = () => {
+    const handleResize = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
@@ -48,7 +48,6 @@ export const KnowledgeGraphBackground = () => {
       canvas.style.height = `${window.innerHeight}px`;
       
       ctx.scale(dpr, dpr);
-      initNodes();
     };
 
     class Node {
@@ -81,8 +80,9 @@ export const KnowledgeGraphBackground = () => {
       }
     }
 
-    resizeAndInit();
-    window.addEventListener('resize', resizeAndInit);
+    initNodes();
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
     const render = () => {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -118,7 +118,7 @@ export const KnowledgeGraphBackground = () => {
     }
 
     return () => {
-      window.removeEventListener('resize', resizeAndInit);
+      window.removeEventListener('resize', handleResize);
       if (frameId) cancelAnimationFrame(frameId);
     };
   }, [reducedMotion]);

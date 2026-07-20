@@ -61,8 +61,8 @@ export const NebulaBackground = () => {
       const types = ['geoid', 'saturn', 'crescent', 'lunar'];
       for (let i = 0; i < PLANET_COUNT; i++) {
         planets.push({
-          x: Math.random() * (canvas.width - 100) + 50,
-          y: Math.random() * (canvas.height - 100) + 50,
+          x: Math.random() * (window.innerWidth - 100) + 50,
+          y: Math.random() * (window.innerHeight - 100) + 50,
           radius: Math.random() * 20 + 15,
           vx: (Math.random() - 0.5) * 0.05,
           vy: (Math.random() - 0.5) * 0.05,
@@ -80,8 +80,8 @@ export const NebulaBackground = () => {
 
     const createStar = (x: number | null = null, y: number | null = null) => {
       return {
-        x: x !== null ? x : Math.random() * canvas.width,
-        y: y !== null ? y : Math.random() * canvas.height,
+        x: x !== null ? x : Math.random() * window.innerWidth,
+        y: y !== null ? y : Math.random() * window.innerHeight,
         size: Math.random() * 1.5 + 0.5,
         vx: (Math.random() - 0.5) * 0.05,
         vy: (Math.random() - 0.5) * 0.05,
@@ -97,7 +97,7 @@ export const NebulaBackground = () => {
       }
     };
 
-    const resizeAndInit = () => {
+    const handleResize = () => {
       const dpr = window.devicePixelRatio || 1;
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
@@ -109,8 +109,6 @@ export const NebulaBackground = () => {
       // Normalize coordinate system to use css pixels
       ctx.scale(dpr, dpr);
       
-      initPlanets();
-      initStars();
     };
 
     const render = () => {
@@ -390,12 +388,14 @@ export const NebulaBackground = () => {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    window.addEventListener('resize', resizeAndInit);
-    resizeAndInit();
+    initPlanets();
+    initStars();
+    window.addEventListener('resize', handleResize);
+    handleResize();
     render();
 
     return () => {
-      window.removeEventListener('resize', resizeAndInit);
+      window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseout', handleMouseOut);
       cancelAnimationFrame(animationFrameId);
