@@ -12,10 +12,11 @@ export async function getSortedPublications() {
 
 function parseDateStrings(period: string) {
   const parts = period.replace(/–/g, '-').split('-').map(s => s.trim());
-  const startStr = parts[0];
-  const endStr = parts.length > 1 ? parts[1] : parts[0];
+  const startStr = parts[0] || '';
+  const endStr = parts.length > 1 ? (parts[1] || '') : startStr;
 
   const parseSingle = (str: string) => {
+    if (!str) return 0;
     if (str.toLowerCase() === 'present') return Infinity;
     const date = new Date(str);
     return isNaN(date.getTime()) ? 0 : date.getTime();

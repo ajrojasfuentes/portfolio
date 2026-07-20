@@ -187,4 +187,8 @@
     border-right: none;
     border-top: 1px solid var(--color-bg-surface-2);
   }
+  
+  .ide-editor {
+    padding: 16px 20px;
+  }
 }

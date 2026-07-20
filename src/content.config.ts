@@ -60,10 +60,21 @@ const accomplishments = defineCollection({
   })
 });
 
+const about = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/about" }),
+  schema: z.object({
+    name: z.string(),
+    titles: z.array(z.string()),
+    location: z.string(),
+    statusText: z.string().optional(),
+  })
+});
+
 export const collections = {
   projects,
   publications,
   experience,
   certifications,
-  accomplishments
+  accomplishments,
+  about
 };

@@ -1,0 +1,76 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import { Reveal } from "@/components/ui/Reveal";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { ACCENTS, hexToRgba } from "@/lib/constants";
+import { getSortedProjects } from "@/lib/content";
+import { render } from "astro:content";
+
+const projects = await getSortedProjects();
+---
+
+<section id="projects" class="py-16 md:py-20">
+  <SectionHeading
+    eyebrow="Selected Work"
+    title="Projects"
+    color={ACCENTS.projects}
+  />
+  <div class="perspective-1000 grid gap-8 sm:grid-cols-1 md:grid-cols-2">
+    {
+      projects.map(async (p, i) => {
+        const { Content } = await render(p);
+        return (
+          <Reveal client:visible delay={i * 100}>
+            <TiltCard client:visible className="h-full w-full">
+              <div
+                class="flex h-full flex-col overflow-hidden rounded-2xl border shadow-xl"
+                style="background-color: var(--color-surface); border-color: var(--color-border-soft)"
+              >
+                <div
+                  class="relative flex h-36 items-center justify-center overflow-hidden"
+                  style="background-color: var(--color-surface-2)"
+                >
+                  <div
+                    class="absolute inset-0 opacity-50"
+                    style={`background-image: repeating-linear-gradient(45deg, ${hexToRgba(ACCENTS.projects, 0.08)} 0px, ${hexToRgba(ACCENTS.projects, 0.08)} 1px, transparent 1px, transparent 14px)`}
+                  />
+                  <div
+                    class="absolute h-20 w-20 rounded-full"
+                    style={`background: ${hexToRgba(ACCENTS.projects, 0.2)}; filter: blur(30px)`}
+                  />
+                  <span
+                    class="absolute top-3 right-3 z-10 rounded-full border px-2 py-1 font-mono text-[10px] uppercase backdrop-blur-sm"
+                    style={`color: ${ACCENTS.projects}; border-color: ${hexToRgba(ACCENTS.projects, 0.4)}; background-color: ${hexToRgba(ACCENTS.projects, 0.1)}`}
+                  >
+                    {p.data.status}
+                  </span>
+                </div>
+                <div class="flex flex-1 flex-col p-5 md:p-6">
+                  <p
+                    class="mb-2 font-mono text-[11px] tracking-wider uppercase"
+                    style="color: var(--color-text-muted)"
+                  >
+                    {p.data.category}
+                  </p>
+                  <h3 class="font-display mb-2 text-lg font-bold text-white">
+                    {p.data.title}
+                  </h3>
+                  <div class="mb-5 flex-1 text-sm text-slate-400">
+                    <Content />
+                  </div>
+                  <div class="mb-5 flex flex-wrap gap-2">
+                    {p.data.tech.map((t) => (
+                      <span class="inline-block rounded-md border border-slate-700 bg-slate-800/30 px-2 py-0.5 md:px-2.5 md:py-1 font-mono text-[10px] md:text-xs text-slate-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </TiltCard>
+          </Reveal>
+        );
+      })
+    }
+  </div>
+</section>

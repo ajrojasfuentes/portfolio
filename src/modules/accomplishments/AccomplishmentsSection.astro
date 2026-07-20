@@ -1,0 +1,51 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import { Reveal } from "@/components/ui/Reveal";
+import { ACCENTS, hexToRgba } from "@/lib/constants";
+import { getSortedAccomplishments } from "@/lib/content";
+import { render } from "astro:content";
+import { ArrowUpRight } from "lucide-react";
+
+const accomplishments = await getSortedAccomplishments();
+---
+
+<section id="accomplishments" class="mb-10 py-16 md:py-20">
+  <SectionHeading
+    eyebrow="Recognition"
+    title="Accomplishments"
+    color={ACCENTS.accomplishments}
+  />
+  <div class="grid gap-4 md:grid-cols-2">
+    {
+      accomplishments.map(async (acc, i) => {
+        const { Content } = await render(acc);
+        return (
+          <Reveal client:visible delay={i * 80}>
+            <div
+              class="flex h-full items-start gap-4 rounded-2xl border p-4 md:p-5 transition-transform hover:-translate-x-1 hover:border-emerald-500/30"
+              style="background-color: var(--color-surface); border-color: var(--color-border-soft)"
+            >
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                style={`background-color: ${hexToRgba(ACCENTS.accomplishments, 0.12)}`}
+              >
+                <ArrowUpRight size={18} color={ACCENTS.accomplishments} />
+              </span>
+              <div>
+                <h3 class="mb-1 font-medium text-white text-sm md:text-base">{acc.data.title}</h3>
+                <div class="text-xs md:text-sm text-slate-400">
+                  <Content />
+                </div>
+                {acc.data.date && (
+                  <p class="mt-2 font-mono text-[10px] text-slate-600">
+                    {acc.data.date}
+                  </p>
+                )}
+              </div>
+            </div>
+          </Reveal>
+        );
+      })
+    }
+  </div>
+</section>

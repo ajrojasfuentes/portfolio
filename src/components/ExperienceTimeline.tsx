@@ -47,7 +47,7 @@ interface FlipCardProps {
 }
 
 const MilestoneNode = ({ entry, index }: { entry: TimelineEntry; index: number }) => {
-  const cat = CATEGORIES.milestone;
+  const cat = CATEGORIES.milestone!;
   const Icon = cat.icon;
 
   return (

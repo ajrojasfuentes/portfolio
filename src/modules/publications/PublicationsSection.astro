@@ -1,0 +1,51 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import { Reveal } from "@/components/ui/Reveal";
+import { ACCENTS, hexToRgba } from "@/lib/constants";
+import { getSortedPublications } from "@/lib/content";
+import { render } from "astro:content";
+
+const publications = await getSortedPublications();
+---
+
+<section id="publications" class="py-16 md:py-20">
+  <SectionHeading
+    eyebrow="Research & Publications"
+    title="Publications"
+    color={ACCENTS.publications}
+  />
+  <div class="flex max-w-4xl flex-col gap-6">
+    {
+      publications.map(async (pub, i) => {
+        const { Content } = await render(pub);
+        return (
+          <Reveal client:visible delay={i * 100}>
+            <div
+              class="rounded-2xl border p-5 transition-colors hover:border-violet-500/30 md:p-7"
+              style="background-color: var(--color-surface); border-color: var(--color-border-soft)"
+            >
+              <div class="mb-3 flex flex-wrap items-center gap-3">
+                <span
+                  class="inline-block rounded-md border px-2 py-0.5 md:px-2.5 md:py-1 font-mono text-[10px] md:text-xs"
+                  style={`color: ${ACCENTS.publications}; border-color: ${hexToRgba(ACCENTS.publications, 0.35)}; background-color: ${hexToRgba(ACCENTS.publications, 0.08)}`}
+                >
+                  {pub.data.type}
+                </span>
+                <span class="flex items-center gap-1.5 font-mono text-[10px] md:text-xs text-slate-500">
+                  {pub.data.venue}
+                </span>
+              </div>
+              <h3 class="font-display mb-2 text-lg md:text-xl font-bold text-white">
+                {pub.data.title}
+              </h3>
+              <p class="mb-3 text-xs md:text-sm text-slate-400">{pub.data.authors}</p>
+              <div class="mb-5 text-sm leading-relaxed text-slate-300">
+                <Content />
+              </div>
+            </div>
+          </Reveal>
+        );
+      })
+    }
+  </div>
+</section>

@@ -1,0 +1,34 @@
+---
+import SectionHeading from "@/components/SectionHeading.astro";
+import ExperienceTimeline from "@/components/ExperienceTimeline";
+import { ACCENTS } from "@/lib/constants";
+import { getSortedExperience } from "@/lib/content";
+import { marked } from "marked";
+
+const experience = await getSortedExperience();
+
+// Serialize experience entries with rendered HTML for the timeline island
+const experienceEntries = await Promise.all(
+  experience.map(async (exp) => {
+    const bodyHtml = await marked.parse(exp.body || "");
+    return {
+      id: exp.id,
+      role: exp.data.role,
+      company: exp.data.company,
+      period: exp.data.period,
+      category: exp.data.category,
+      shortDesc: exp.data.shortDesc || "",
+      bodyHtml,
+    };
+  })
+);
+---
+
+<section id="experience" class="py-16 md:py-20">
+  <SectionHeading
+    eyebrow="Career Timeline"
+    title="Experience"
+    color={ACCENTS.experience}
+  />
+  <ExperienceTimeline client:visible entries={experienceEntries} />
+</section>

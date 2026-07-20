@@ -28,19 +28,27 @@ export const KnowledgeGraphBackground = () => {
 
     let nodes: Node[] = [];
 
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      
-      nodes.forEach(n => {
-        if (n.x > canvas.width) n.x = canvas.width;
-        if (n.y > canvas.height) n.y = canvas.height;
-      });
+    const isMobile = window.innerWidth < 768;
+    const NODE_COUNT = isMobile ? 35 : 70;
+    const MAX_CONNECTION_DISTANCE = isMobile ? 80 : 120;
 
-      const count = Math.min(70, Math.floor((canvas.width * canvas.height) / 22000));
-      while (nodes.length < count) {
-        nodes.push(new Node(canvas.width, canvas.height));
+    const initNodes = () => {
+      nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push(new Node(window.innerWidth, window.innerHeight));
       }
+    };
+
+    const resizeAndInit = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      ctx.scale(dpr, dpr);
+      initNodes();
     };
 
     class Node {
@@ -73,17 +81,18 @@ export const KnowledgeGraphBackground = () => {
       }
     }
 
-    resize();
-    window.addEventListener('resize', resize);
+    resizeAndInit();
+    window.addEventListener('resize', resizeAndInit);
 
-    const drawFrame = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const render = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i]!.x - nodes[j]!.x;
           const dy = nodes[i]!.y - nodes[j]!.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 130) {
+          if (dist < MAX_CONNECTION_DISTANCE) {
             ctx.beginPath();
             ctx.strokeStyle = `rgba(148, 163, 184, ${0.14 * (1 - dist / 130)})`;
             ctx.lineWidth = 1;
@@ -97,19 +106,19 @@ export const KnowledgeGraphBackground = () => {
     };
 
     const animate = () => {
-      nodes.forEach((n) => n.update(canvas.width, canvas.height));
-      drawFrame();
+      nodes.forEach((n) => n.update(window.innerWidth, window.innerHeight));
+      render();
       frameId = requestAnimationFrame(animate);
     };
 
     if (reducedMotion) {
-      drawFrame();
+      render();
     } else {
       animate();
     }
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', resizeAndInit);
       if (frameId) cancelAnimationFrame(frameId);
     };
   }, [reducedMotion]);

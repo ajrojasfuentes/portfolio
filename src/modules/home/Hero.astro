@@ -1,0 +1,66 @@
+---
+import { Reveal } from "@/components/ui/Reveal";
+import { ACCENTS, hexToRgba } from "@/lib/constants";
+import { MapPin } from "lucide-react";
+import { getEntry, render } from "astro:content";
+
+const profileEntry = await getEntry("about", "profile");
+if (!profileEntry) {
+  throw new Error("Profile entry not found in src/content/about/profile.mdx");
+}
+
+const { Content } = await render(profileEntry);
+const { name, titles, location, statusText } = profileEntry.data;
+---
+
+<section id="home" class="relative flex min-h-[86vh] items-center pt-10 md:pt-20">
+  <div class="relative z-10 grid w-full items-center gap-14 md:grid-cols-2">
+    <div>
+      {statusText && (
+        <Reveal client:load>
+          <div
+            class="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-xs"
+            style={`border-color: ${hexToRgba(ACCENTS.home, 0.35)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.08)}`}
+          >
+            <span
+              class="h-1.5 w-1.5 animate-pulse rounded-full"
+              style={`background-color: ${ACCENTS.home}`}></span>
+            {statusText}
+          </div>
+        </Reveal>
+      )}
+
+      <Reveal client:load delay={80}>
+        <h1 class="font-display mb-5 text-4xl leading-[1.05] font-bold text-white sm:text-5xl md:text-6xl lg:text-[4rem]">
+          {name}
+        </h1>
+      </Reveal>
+
+      {titles && titles.length > 0 && (
+        <Reveal client:load delay={140}>
+          <div class="mb-6 flex flex-wrap gap-2">
+            {titles.map((title) => (
+              <span class="inline-block rounded-md border border-slate-700 bg-slate-800/30 px-2.5 py-1 font-mono text-xs text-slate-300">
+                {title}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+      )}
+
+      <Reveal client:load delay={200}>
+        <div class="mb-8 max-w-lg text-base md:text-lg leading-relaxed text-slate-300">
+          <Content />
+        </div>
+      </Reveal>
+
+      {location && (
+        <Reveal client:load delay={320}>
+          <div class="flex items-center gap-2 font-mono text-sm text-slate-400">
+            <MapPin size={16} /> {location}
+          </div>
+        </Reveal>
+      )}
+    </div>
+  </div>
+</section>

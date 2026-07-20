@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ACCENTS, hexToRgba } from '@/lib/constants';
 
 const useReducedMotion = () => {
   const [reduced, setReduced] = useState(false);
@@ -39,11 +38,12 @@ export const NebulaBackground = () => {
     let lastUfoTime = performance.now();
     let nextUfoDelay = 60000 + Math.random() * 120000;
 
-    const STAR_COUNT = 100;
-    const MAX_CONNECTION_DISTANCE = 85;
-    const PLANET_COUNT = 5;
+    const isMobile = window.innerWidth < 768;
+    const STAR_COUNT = isMobile ? 40 : 100;
+    const MAX_CONNECTION_DISTANCE = isMobile ? 60 : 85;
+    const PLANET_COUNT = isMobile ? 3 : 5;
 
-    let mouse = { x: null as number | null, y: null as number | null, radius: 150 };
+    let mouse = { x: null as number | null, y: null as number | null, radius: isMobile ? 100 : 150 };
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
@@ -98,15 +98,24 @@ export const NebulaBackground = () => {
     };
 
     const resizeAndInit = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      
+      // Keep CSS size identical
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      // Normalize coordinate system to use css pixels
+      ctx.scale(dpr, dpr);
+      
       initPlanets();
       initStars();
     };
 
     const render = () => {
       const now = performance.now();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
       // 1. Update & Draw Planets
       ctx.lineWidth = 1;
@@ -116,9 +125,9 @@ export const NebulaBackground = () => {
         p.rotationAngle += p.rotationSpeed;
 
         if (p.x - p.radius < 0) { p.x = p.radius; p.vx *= -1; }
-        if (p.x + p.radius > canvas.width) { p.x = canvas.width - p.radius; p.vx *= -1; }
+        if (p.x + p.radius > window.innerWidth) { p.x = window.innerWidth - p.radius; p.vx *= -1; }
         if (p.y - p.radius < 0) { p.y = p.radius; p.vy *= -1; }
-        if (p.y + p.radius > canvas.height) { p.y = canvas.height - p.radius; p.vy *= -1; }
+        if (p.y + p.radius > window.innerHeight) { p.y = window.innerHeight - p.radius; p.vy *= -1; }
 
         ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
@@ -193,10 +202,10 @@ export const NebulaBackground = () => {
         star.x += star.vx;
         star.y += star.vy;
 
-        if (star.x < 0) star.x = canvas.width;
-        if (star.x > canvas.width) star.x = 0;
-        if (star.y < 0) star.y = canvas.height;
-        if (star.y > canvas.height) star.y = 0;
+        if (star.x < 0) star.x = window.innerWidth;
+        if (star.x > window.innerWidth) star.x = 0;
+        if (star.y < 0) star.y = window.innerHeight;
+        if (star.y > window.innerHeight) star.y = 0;
 
         if (mouse.x !== null && mouse.y !== null) {
           const dx = star.x - mouse.x;
@@ -246,10 +255,10 @@ export const NebulaBackground = () => {
         
         let startX, startY, targetX, targetY;
         const edge = Math.floor(Math.random() * 4);
-        if (edge === 0) { startX = Math.random() * canvas.width; startY = -50; targetX = Math.random() * canvas.width; targetY = canvas.height + 50; }
-        else if (edge === 1) { startX = canvas.width + 50; startY = Math.random() * canvas.height; targetX = -50; targetY = Math.random() * canvas.height; }
-        else if (edge === 2) { startX = Math.random() * canvas.width; startY = canvas.height + 50; targetX = Math.random() * canvas.width; targetY = -50; }
-        else { startX = -50; startY = Math.random() * canvas.height; targetX = canvas.width + 50; targetY = Math.random() * canvas.height; }
+        if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -50; targetX = Math.random() * window.innerWidth; targetY = window.innerHeight + 50; }
+        else if (edge === 1) { startX = window.innerWidth + 50; startY = Math.random() * window.innerHeight; targetX = -50; targetY = Math.random() * window.innerHeight; }
+        else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + 50; targetX = Math.random() * window.innerWidth; targetY = -50; }
+        else { startX = -50; startY = Math.random() * window.innerHeight; targetX = window.innerWidth + 50; targetY = Math.random() * window.innerHeight; }
 
         const angle = Math.atan2(targetY - startY, targetX - startX);
 
@@ -298,7 +307,7 @@ export const NebulaBackground = () => {
             ss.y = ss.baseY + offsetY;
         }
         
-        if (ss.x < -200 || ss.x > canvas.width + 200 || ss.y > canvas.height + 200 || ss.y < -200) {
+        if (ss.x < -200 || ss.x > window.innerWidth + 200 || ss.y > window.innerHeight + 200 || ss.y < -200) {
           shootingStars.splice(i, 1);
           continue;
         }
@@ -335,10 +344,10 @@ export const NebulaBackground = () => {
 
         const edge = Math.floor(Math.random() * 4);
         let startX, startY, targetX, targetY;
-        if (edge === 0) { startX = Math.random() * canvas.width; startY = -50; targetX = Math.random() * canvas.width; targetY = canvas.height + 50; }
-        else if (edge === 1) { startX = canvas.width + 50; startY = Math.random() * canvas.height; targetX = -50; targetY = Math.random() * canvas.height; }
-        else if (edge === 2) { startX = Math.random() * canvas.width; startY = canvas.height + 50; targetX = Math.random() * canvas.width; targetY = -50; }
-        else { startX = -50; startY = Math.random() * canvas.height; targetX = canvas.width + 50; targetY = Math.random() * canvas.height; }
+        if (edge === 0) { startX = Math.random() * window.innerWidth; startY = -50; targetX = Math.random() * window.innerWidth; targetY = window.innerHeight + 50; }
+        else if (edge === 1) { startX = window.innerWidth + 50; startY = Math.random() * window.innerHeight; targetX = -50; targetY = Math.random() * window.innerHeight; }
+        else if (edge === 2) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + 50; targetX = Math.random() * window.innerWidth; targetY = -50; }
+        else { startX = -50; startY = Math.random() * window.innerHeight; targetX = window.innerWidth + 50; targetY = Math.random() * window.innerHeight; }
 
         const dx = targetX - startX;
         const dy = targetY - startY;
@@ -375,7 +384,7 @@ export const NebulaBackground = () => {
         ctx.arc(renderX + 7, renderY + 1, 1.5, 0, Math.PI * 2);
         ctx.fill();
 
-        if (ufo.x < -100 || ufo.x > canvas.width + 100 || ufo.y < -100 || ufo.y > canvas.height + 100) ufo = null;
+        if (ufo.x < -100 || ufo.x > window.innerWidth + 100 || ufo.y < -100 || ufo.y > window.innerHeight + 100) ufo = null;
       }
 
       animationFrameId = requestAnimationFrame(render);
