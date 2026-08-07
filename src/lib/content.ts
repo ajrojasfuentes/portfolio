@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getCollection } from 'astro:content';
 
 export async function getSortedProjects() {
   const projects = await getCollection('projects');
-  return projects.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  return projects.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
 }
 
 export async function getSortedPublications() {
   const publications = await getCollection('publications');
-  return publications.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  return publications.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
 }
 
 function parseDateStrings(period: string) {
@@ -37,7 +38,7 @@ const CATEGORY_PRIORITY: Record<string, number> = {
 
 export async function getSortedExperience() {
   const experience = await getCollection('experience');
-  return experience.sort((a, b) => {
+  return experience.sort((a: any, b: any) => {
     const datesA = parseDateStrings(a.data.period);
     const datesB = parseDateStrings(b.data.period);
     
@@ -58,10 +59,10 @@ export async function getSortedExperience() {
 
 export async function getSortedCertifications() {
   const certifications = await getCollection('certifications');
-  return certifications.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  return certifications.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
 }
 
 export async function getSortedAccomplishments() {
   const accomplishments = await getCollection('accomplishments');
-  return accomplishments.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+  return accomplishments.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
 }

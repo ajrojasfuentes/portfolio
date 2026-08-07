@@ -1,7 +1,8 @@
 ---
-import '@/styles/globals.css';
-import Nav from '@/components/Nav';
-import { NebulaBackground } from '@/components/NebulaBackground';
+import "@/styles/globals.css";
+import Nav from "@/components/layout/Nav";
+import { StellarVoid } from "@ajrojasfuentes/stellar-void";
+import "@ajrojasfuentes/stellar-void/dist/styles.css";
 
 interface Props {
   title: string;
@@ -10,25 +11,145 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Anthony Rojas Fuentes - Data Automation & AI Engineer" />
+    <meta
+      name="description"
+      content="Anthony Rojas Fuentes - Data Automation & AI Engineer"
+    />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
   <body class="portfolio-shell min-h-screen">
-    <NebulaBackground client:idle />
+    <StellarVoid
+      client:idle
+      config={{
+        constellations: {
+          starsCount: 200,
+          starsSize: { min: 0.5, max: 2 },
+          starsOpacity: { min: 0.3, max: 0.8 },
+          starsSpeed: 0.1,
+          linksDistance: 105,
+          linksOpacity: 0.25,
+          linksWidth: 0.5,
+          interactivity: {
+            repulseDistance: 130,
+            grabDistance: 110,
+            grabOpacity: 0.2,
+          },
+        },
+        planets: [
+          {
+            id: "geoid-1",
+            type: "geoid",
+            size: 35,
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "saturnian-1",
+            type: "saturnian",
+            size: 45,
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "gaseous-1",
+            type: "gaseous",
+            size: 60,
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "iceous-1",
+            type: "iceous",
+            size: 45,
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "lunar-1",
+            type: "lunar",
+            size: { min: 30, max: 35 },
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "binary-1",
+            type: "binary",
+            size: { min: 45, max: 50 },
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+          {
+            id: "orbital-1",
+            type: "orbital",
+            size: { min: 30, max: 35 },
+            opacity: { min: 0.6, max: 0.9 },
+            speed: { min: 0.03, max: 0.13 },
+          },
+        ],
+        travelers: {
+          spawnIntervalMin: 45000,
+          spawnIntervalMax: 120000,
+          probabilities: {
+            common: 0.7,
+            uncommon: 0.2,
+            rare: 0.1,
+          },
+          shapes: {
+            asteroid: {
+              type: "asteroid",
+              size: { min: 9, max: 11 },
+              speedMultiplier: 1.4,
+            },
+            meteor: {
+              type: "meteor",
+              size: { min: 9, max: 11 },
+              speedMultiplier: 1.4,
+            },
+            comet: {
+              type: "comet",
+              size: { min: 9, max: 11 },
+              speedMultiplier: 1.4,
+            },
+            boulder: {
+              type: "boulder",
+              size: { min: 20, max: 25 },
+              speedMultiplier: 0.25,
+              rotationSpeed: { min: 0.005, max: 0.01 },
+            },
+            satellite: {
+              type: "satellite",
+              size: { min: 20, max: 25 },
+              speedMultiplier: 0.25,
+              rotationSpeed: { min: 0.005, max: 0.01 },
+            },
+            "ufo-1": { type: "ufo-1", size: 22, speedMultiplier: 1 },
+            "ufo-2": { type: "ufo-2", size: 25, speedMultiplier: 1 },
+            invader: { type: "invader", size: 20, speedMultiplier: 1 },
+          },
+        },
+      }}
+    />
     <Nav client:load />
-    <main class="max-w-6xl mx-auto px-6 pt-10">
+    <main class="mx-auto max-w-6xl px-6 pt-10">
       <slot />
     </main>
-    <footer class="border-t py-8 mt-20" style="border-color: var(--color-border-soft)">
-      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-        <p>© {new Date().getFullYear()} Anthony Rojas Fuentes. All rights reserved.</p>
+    <footer
+      class="mt-20 border-t py-8"
+      style="border-color: var(--color-border-soft)"
+    >
+      <div
+        class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-slate-500 md:flex-row"
+      >
+        <p>
+          © {new Date().getFullYear()} Anthony Rojas Fuentes. All rights reserved.
+        </p>
       </div>
     </footer>
   </body>
