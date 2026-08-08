@@ -23,7 +23,8 @@
     "test:e2e": "playwright test",
     "validate": "tsx scripts/validate-content.ts",
     "content:new": "tsx scripts/new-content.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "node scripts/fix-extensions.js"
   },
   "dependencies": {
     "@ajrojasfuentes/stellar-void": "^1.0.2",

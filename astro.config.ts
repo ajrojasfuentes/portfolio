@@ -13,27 +13,7 @@ export default defineConfig({
     sitemap(),
   ],
   vite: {
-    plugins: [tailwindcss()],
-    ssr: {
-      noExternal: [
-        '@ajrojasfuentes/stellar-void', 
-        '@ajrojasfuentes/core', 
-        '@ajrojasfuentes/background', 
-        '@ajrojasfuentes/constellations', 
-        '@ajrojasfuentes/planets', 
-        '@ajrojasfuentes/travelers'
-      ]
-    },
-    optimizeDeps: {
-      include: [
-        '@ajrojasfuentes/stellar-void', 
-        '@ajrojasfuentes/core', 
-        '@ajrojasfuentes/background', 
-        '@ajrojasfuentes/constellations', 
-        '@ajrojasfuentes/planets', 
-        '@ajrojasfuentes/travelers'
-      ]
-    }
+    plugins: [tailwindcss()]
   },
   markdown: {
     shikiConfig: {
