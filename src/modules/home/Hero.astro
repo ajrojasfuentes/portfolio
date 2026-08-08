@@ -13,7 +13,7 @@ const { Content } = await render(profileEntry);
 const { name, titles, location, statusText } = profileEntry.data;
 ---
 
-<section id="home" class="relative flex min-h-[86vh] items-center pt-10 md:pt-20">
+<section id="home" class="relative flex min-h-[calc(100vh-2.5rem)] items-center pt-10 md:pt-20 mb-16 md:mb-24">
   <div class="relative z-10 grid w-full items-center gap-14 md:grid-cols-2">
     <div>
       {statusText && (
