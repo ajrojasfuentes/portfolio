@@ -18,63 +18,87 @@ const { name, titles, location, statusText } = profileEntry.data;
   class="relative flex min-h-[86vh] items-center pt-10 md:pt-20"
 >
   <div class="relative z-10 grid w-full items-center gap-14 md:grid-cols-2">
-    <div>
-      {
-        statusText && (
-          <Reveal client:load>
-            <div
-              class="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-xs"
-              style={`border-color: ${hexToRgba(ACCENTS.home, 0.35)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.08)}`}
-            >
-              <span
-                class="h-1.5 w-1.5 animate-pulse rounded-full"
-                style={`background-color: ${ACCENTS.home}`}
-              />
-              {statusText}
+    <div class="w-full">
+      <Reveal client:load>
+        <div class="group relative overflow-hidden rounded-[2.5rem] bg-slate-900/40 border border-white/10 p-8 md:p-10 backdrop-blur-xl shadow-2xl transition-all duration-500 hover:bg-slate-900/50 hover:shadow-[0_0_40px_rgba(120,119,198,0.3)] hover:-translate-y-2">
+          
+          {/* Subtle top inner light / relief */}
+          <div class="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/10 pointer-events-none"></div>
+          {/* Gradient glow behind */}
+          <div class="absolute -inset-10 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-2xl pointer-events-none z-0"></div>
+
+          <div class="relative z-10 flex flex-col items-center text-center md:items-start md:text-left">
+            {
+              statusText && (
+                <div
+                  class="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-xs shadow-inner backdrop-blur-sm"
+                  style={`border-color: ${hexToRgba(ACCENTS.home, 0.35)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.08)}`}
+                >
+                  <span
+                    class="h-1.5 w-1.5 animate-pulse rounded-full"
+                    style={`background-color: ${ACCENTS.home}`}
+                  />
+                  {statusText}
+                </div>
+              )
+            }
+
+            {/* Photo & Name Row */}
+            <div class="flex w-full flex-col items-center gap-6 md:flex-row md:items-center">
+              {/* Photo */}
+              <div class="relative h-32 w-32 shrink-0 rounded-full border-2 border-dashed border-white/40 p-1.5 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 group-hover:border-white/60">
+                <img
+                  src="/Photo.jpg"
+                  alt={name}
+                  class="h-full w-full rounded-full object-cover shadow-inner"
+                />
+              </div>
+
+              {/* Name & Titles */}
+              <div class="flex flex-col items-center md:items-start">
+                <h1 class="font-display mb-3 text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-5xl">
+                  {name}
+                </h1>
+
+                {
+                  titles && titles.length > 0 && (
+                    <div class="mb-3 flex flex-wrap justify-center gap-2 md:justify-start">
+                      {titles.map((title) => (
+                        <span class="inline-block rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-slate-300 shadow-sm backdrop-blur-md transition-colors group-hover:border-white/20 group-hover:text-white">
+                          {title}
+                        </span>
+                      ))}
+                    </div>
+                  )
+                }
+
+                {
+                  location && (
+                    <div class="flex items-center gap-2 font-mono text-sm text-slate-400 transition-colors group-hover:text-slate-300">
+                      <MapPin size={16} /> {location}
+                    </div>
+                  )
+                }
+              </div>
             </div>
-          </Reveal>
-        )
-      }
 
-      <Reveal client:load delay={80}>
-        <h1
-          class="font-display mb-5 text-4xl leading-[1.05] font-bold text-white sm:text-5xl md:text-6xl lg:text-[4rem]"
-        >
-          {name}
-        </h1>
-      </Reveal>
-
-      {
-        titles && titles.length > 0 && (
-          <Reveal client:load delay={140}>
-            <div class="mb-6 flex flex-wrap gap-2">
-              {titles.map((title) => (
-                <span class="inline-block rounded-md border border-slate-700 bg-slate-800/30 px-2.5 py-1 font-mono text-xs text-slate-300">
-                  {title}
-                </span>
-              ))}
+            {/* Quote */}
+            <div class="relative mt-8">
+              <div class="absolute -left-4 top-0 font-serif text-4xl leading-none text-white/10">
+                "
+              </div>
+              <p class="bg-gradient-to-r from-white via-indigo-100 to-slate-300 bg-clip-text text-lg font-medium italic leading-relaxed text-transparent md:text-xl">
+                I turn complex problems into creative and innovative solutions. There is no challenge I cannot solve, and no solution I cannot reach.
+              </p>
             </div>
-          </Reveal>
-        )
-      }
 
-      <Reveal client:load delay={200}>
-        <div
-          class="mb-8 max-w-lg text-base leading-relaxed text-slate-300 md:text-lg"
-        >
-          <Content />
+            {/* Original Bio Content */}
+            <div class="mt-6 w-full border-t border-white/10 pt-6 text-base leading-relaxed text-slate-400 transition-colors group-hover:text-slate-300">
+              <Content />
+            </div>
+          </div>
         </div>
       </Reveal>
-
-      {
-        location && (
-          <Reveal client:load delay={320}>
-            <div class="flex items-center gap-2 font-mono text-sm text-slate-400">
-              <MapPin size={16} /> {location}
-            </div>
-          </Reveal>
-        )
-      }
     </div>
   </div>
 </section>
