@@ -66,8 +66,15 @@ const about = defineCollection({
   schema: z.object({
     name: z.string(),
     titles: z.array(z.string()),
+    email: z.string().optional(),
+    tel: z.string().optional(),
     location: z.string(),
     statusText: z.string().optional(),
+    linkedin: z.string().optional(),
+    github: z.string().optional(),
+    cvLink: z.string().optional(),
+    phrase: z.string().optional(),
+    description: z.string().optional(),
   })
 });
 

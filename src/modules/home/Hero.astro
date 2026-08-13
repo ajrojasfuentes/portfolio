@@ -1,70 +1,115 @@
 ---
 import { Reveal } from "@/components/ui/Reveal";
 import { ACCENTS, hexToRgba } from "@/lib/constants";
-import { MapPin } from "lucide-react";
-import { getEntry, render } from "astro:content";
+import { MapPin, Github, Linkedin, Mail, FileDown, Phone } from "lucide-react";
+import { getEntry } from "astro:content";
 
 const profileEntry = await getEntry("about", "profile");
 if (!profileEntry) {
   throw new Error("Profile entry not found in src/content/about/profile.mdx");
 }
 
-const { Content } = await render(profileEntry);
-const { name, titles, location, statusText } = profileEntry.data;
+const { name, titles, email, tel, location, statusText, linkedin, github, cvLink, phrase } = profileEntry.data;
 ---
 
 <section
   id="home"
-  class="relative flex min-h-[86vh] items-center pt-10 md:pt-20"
+  class="relative flex min-h-[86vh] items-center justify-center pt-10 pb-16 md:pt-20"
 >
-  <div class="relative z-10 grid w-full items-center gap-14 md:grid-cols-2">
-    <div class="w-full">
+  <div
+    class="relative z-10 mx-auto -mt-2 flex w-full max-w-screen-2xl justify-start px-4 md:-mt-5 md:px-8 lg:px-16"
+  >
+    {/* Contenedor del Badge con perspectiva 3D */}
+    <div id="badge-container" class="group w-full max-w-[480px] cursor-pointer">
       <Reveal client:load>
-        <div class="group relative overflow-hidden rounded-[2.5rem] bg-slate-900/40 border border-white/10 p-8 md:p-10 backdrop-blur-xl shadow-2xl transition-all duration-500 hover:bg-slate-900/50 hover:shadow-[0_0_40px_rgba(120,119,198,0.3)] hover:-translate-y-2">
-          
-          {/* Subtle top inner light / relief */}
-          <div class="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/10 pointer-events-none"></div>
-          {/* Gradient glow behind */}
-          <div class="absolute -inset-10 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 blur-2xl pointer-events-none z-0"></div>
+        {/* Contenedor de inclinación 3D interactivo */}
+        <div
+          id="badge-tilt"
+          class="transform-style-3d relative w-full transition-transform duration-200 ease-out will-change-transform"
+          style="transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);"
+        >
+          {/* Tarjeta 3D que gira (Flip) */}
+          <div
+            id="badge-card"
+            class="transform-style-3d relative w-full transition-transform duration-1000 ease-out"
+          >
+            {/* ======================= CARA FRONTAL ======================= */}
+            <div
+              class="relative flex w-full flex-col items-center overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/10 px-10 py-12 text-center shadow-2xl shadow-black/40 backdrop-blur-xl backface-hidden"
+            >
+              {/* Lanyard Hole (Ranura para cordón) */}
+              <div
+                class="absolute top-4 left-1/2 z-30 h-3 w-16 -translate-x-1/2 rounded-full bg-slate-950/40 shadow-inner ring-1 ring-white/10 ring-inset"
+              >
+              </div>
 
-          <div class="relative z-10 flex flex-col items-center text-center md:items-start md:text-left">
-            {
-              statusText && (
-                <div
-                  class="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-xs shadow-inner backdrop-blur-sm"
-                  style={`border-color: ${hexToRgba(ACCENTS.home, 0.35)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.08)}`}
-                >
+              {/* Textura de Granulado Grueso (Noise) suavizada */}
+              <div
+                class="pointer-events-none absolute inset-0 z-0 opacity-[0.08] mix-blend-overlay"
+                style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+              >
+              </div>
+
+              {/* Relieve interno constante */}
+              <div
+                class="pointer-events-none absolute inset-0 z-10 rounded-[2rem] ring-1 ring-white/10 ring-inset"
+              >
+              </div>
+
+              {/* Número de Identificación y Triángulo (Top Bar) */}
+              <div
+                class="relative z-20 mb-6 flex w-full items-center justify-between border-b border-white/10 pb-3"
+              >
+                <div class="flex items-center gap-2">
+                  {
+                    /* Triángulo Invertido Emisivo (Neon fluido más brillante) */
+                  }
+                  <div
+                    class="drop-shadow-[0_0_4px_rgba(217,70,239,0.8)] drop-shadow-[0_0_12px_rgba(217,70,239,1)]"
+                  >
+                    <div
+                      class="animate-fluid-nebula h-3.5 w-3.5"
+                      style="clip-path: polygon(50% 100%, 0 0, 100% 0);"
+                    >
+                    </div>
+                  </div>
                   <span
-                    class="h-1.5 w-1.5 animate-pulse rounded-full"
-                    style={`background-color: ${ACCENTS.home}`}
-                  />
-                  {statusText}
+                    class="font-mono text-[10px] tracking-widest text-slate-400 uppercase"
+                  >
+                    Clearance_Lvl: 09
+                  </span>
                 </div>
-              )
-            }
+                <span
+                  class="font-mono text-[11px] tracking-widest text-indigo-400"
+                >
+                  ID: ARF-2026-X
+                </span>
+              </div>
 
-            {/* Photo & Name Row */}
-            <div class="flex w-full flex-col items-center gap-6 md:flex-row md:items-center">
-              {/* Photo */}
-              <div class="relative h-32 w-32 shrink-0 rounded-full border-2 border-dashed border-white/40 p-1.5 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3 group-hover:border-white/60">
+              {/* Foto con Marco Punteado */}
+              <div
+                class="relative z-20 mb-6 h-32 w-32 shrink-0 rounded-full border border-dashed border-white/40 p-1.5"
+              >
                 <img
                   src="/Photo.jpg"
                   alt={name}
-                  class="h-full w-full rounded-full object-cover shadow-inner"
+                  class="h-full w-full rounded-full object-cover shadow-inner contrast-125 grayscale-[20%]"
                 />
               </div>
 
-              {/* Name & Titles */}
-              <div class="flex flex-col items-center md:items-start">
-                <h1 class="font-display mb-3 text-4xl font-bold leading-[1.05] text-white sm:text-5xl md:text-5xl">
+              {/* Nombre y Títulos Centrados */}
+              <div class="relative z-20 flex w-full flex-col items-center">
+                <h1
+                  class="font-display mb-3 text-[32px] leading-tight font-bold tracking-tight whitespace-nowrap text-white"
+                >
                   {name}
                 </h1>
 
                 {
                   titles && titles.length > 0 && (
-                    <div class="mb-3 flex flex-wrap justify-center gap-2 md:justify-start">
+                    <div class="mb-5 flex w-full flex-nowrap justify-center gap-1.5 px-2">
                       {titles.map((title) => (
-                        <span class="inline-block rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs text-slate-300 shadow-sm backdrop-blur-md transition-colors group-hover:border-white/20 group-hover:text-white">
+                        <span class="inline-block rounded border border-white/10 bg-white/5 px-2.5 py-1.5 text-[9px] tracking-wider whitespace-nowrap text-slate-300 uppercase shadow-sm backdrop-blur-md">
                           {title}
                         </span>
                       ))}
@@ -72,29 +117,446 @@ const { name, titles, location, statusText } = profileEntry.data;
                   )
                 }
 
-                {
-                  location && (
-                    <div class="flex items-center gap-2 font-mono text-sm text-slate-400 transition-colors group-hover:text-slate-300">
-                      <MapPin size={16} /> {location}
+                <div
+                  class="relative z-20 mb-2 flex w-full flex-col items-center gap-3"
+                >
+                  {/* Fila 1: Correo y Teléfono */}
+                  <div
+                    class="flex items-center justify-center gap-4 font-mono text-[11px] text-slate-300"
+                  >
+                    <a
+                      href={`mailto:${email}`}
+                      class="contact-link flex items-center gap-1.5 transition-colors hover:text-white"
+                    >
+                      <Mail size={13} class="text-indigo-400" /> {email}
+                    </a>
+                    <span class="text-white/20">|</span>
+                    <a
+                      href={`tel:${tel?.replace(/\\s+/g, '')}`}
+                      class="contact-link flex items-center gap-1.5 transition-colors hover:text-white"
+                    >
+                      <Phone size={13} class="text-indigo-400" /> {tel}
+                    </a>
+                  </div>
+
+                  {/* Fila 2: 4 Íconos */}
+                  <div class="flex items-center justify-center gap-3">
+                    <a
+                      href={linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="contact-link group/mini relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 transition-all hover:scale-110 active:scale-95"
+                    >
+                      <div
+                        class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover/mini:opacity-100"
+                      >
+                        <div class="nebula-flow-wrap absolute inset-0">
+                          <div class="nebula-flow"></div>
+                        </div>
+                        <div class="nebula-blob-layer absolute inset-0">
+                          <div class="nebula-blob blob-1"></div><div
+                            class="nebula-blob blob-2"
+                          >
+                          </div><div class="nebula-blob blob-3"></div><div
+                            class="nebula-blob blob-4"
+                          >
+                          </div><div class="nebula-blob blob-5"></div><div
+                            class="nebula-blob blob-6"
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <Linkedin
+                        size={16}
+                        class="relative z-10 text-indigo-300 transition-colors duration-300 group-hover/mini:text-white"
+                      />
+                    </a>
+                    <a
+                      href={github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="contact-link group/mini relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 transition-all hover:scale-110 active:scale-95"
+                    >
+                      <div
+                        class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover/mini:opacity-100"
+                      >
+                        <div class="nebula-flow-wrap absolute inset-0">
+                          <div class="nebula-flow"></div>
+                        </div>
+                        <div class="nebula-blob-layer absolute inset-0">
+                          <div class="nebula-blob blob-1"></div><div
+                            class="nebula-blob blob-2"
+                          >
+                          </div><div class="nebula-blob blob-3"></div><div
+                            class="nebula-blob blob-4"
+                          >
+                          </div><div class="nebula-blob blob-5"></div><div
+                            class="nebula-blob blob-6"
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <Github
+                        size={16}
+                        class="relative z-10 text-indigo-300 transition-colors duration-300 group-hover/mini:text-white"
+                      />
+                    </a>
+                    <a
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="contact-link group/mini relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 transition-all hover:scale-110 active:scale-95"
+                    >
+                      <div
+                        class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover/mini:opacity-100"
+                      >
+                        <div class="nebula-flow-wrap absolute inset-0">
+                          <div class="nebula-flow"></div>
+                        </div>
+                        <div class="nebula-blob-layer absolute inset-0">
+                          <div class="nebula-blob blob-1"></div><div
+                            class="nebula-blob blob-2"
+                          >
+                          </div><div class="nebula-blob blob-3"></div><div
+                            class="nebula-blob blob-4"
+                          >
+                          </div><div class="nebula-blob blob-5"></div><div
+                            class="nebula-blob blob-6"
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <Mail
+                        size={16}
+                        class="relative z-10 text-indigo-300 transition-colors duration-300 group-hover/mini:text-white"
+                      />
+                    </a>
+                    <a
+                      href={cvLink}
+                      download="Anthony_Rojas_CV.pdf"
+                      class="contact-link group/mini relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 transition-all hover:scale-110 active:scale-95"
+                    >
+                      <div
+                        class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 group-hover/mini:opacity-100"
+                      >
+                        <div class="nebula-flow-wrap absolute inset-0">
+                          <div class="nebula-flow"></div>
+                        </div>
+                        <div class="nebula-blob-layer absolute inset-0">
+                          <div class="nebula-blob blob-1"></div><div
+                            class="nebula-blob blob-2"
+                          >
+                          </div><div class="nebula-blob blob-3"></div><div
+                            class="nebula-blob blob-4"
+                          >
+                          </div><div class="nebula-blob blob-5"></div><div
+                            class="nebula-blob blob-6"
+                          >
+                          </div>
+                        </div>
+                      </div>
+                      <FileDown
+                        size={16}
+                        class="relative z-10 text-indigo-300 transition-colors duration-300 group-hover/mini:text-white"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Separador inferior a los detalles de contacto */}
+              <div class="relative z-20 my-4 w-full border-t border-white/10">
+              </div>
+
+              {/* Cita */}
+              <div class="relative z-20 px-2">
+                <p class="text-base leading-relaxed text-slate-300 italic">
+                  <span
+                    class="mr-1 font-serif text-xl leading-none text-indigo-400"
+                    >"</span
+                  >
+                  {phrase}
+                  <span
+                    class="ml-1 font-serif text-xl leading-none text-indigo-400"
+                    >"</span
+                  >
+                </p>
+              </div>
+
+              {/* Separador entre cita y tag de estado */}
+              <div
+                class="relative z-20 mt-4 mb-6 w-full border-t border-white/10"
+              >
+              </div>
+
+              {/* Estado Opcional (Tag "Open to Works and Projects") */}
+              {
+                statusText && (
+                  <div
+                    class="relative z-20 mb-2 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase shadow-inner backdrop-blur-md"
+                    style={`border-color: ${hexToRgba(ACCENTS.home, 0.3)}; color: ${ACCENTS.home}; background-color: ${hexToRgba(ACCENTS.home, 0.1)}`}
+                  >
+                    <span
+                      class="h-2 w-2 animate-pulse rounded-full"
+                      style={`background-color: ${ACCENTS.home}`}
+                    />
+                    {statusText}
+                  </div>
+                )
+              }
+
+              {
+                /* Código de Barras Decorativo (Altura incrementada y escalado suave) */
+              }
+              <div
+                class="relative z-20 mt-6 flex w-full origin-top scale-110 flex-col items-center opacity-60"
+              >
+                <div class="flex h-10 items-end gap-[2px]">
+                  <div class="h-full w-1 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-full w-1.5 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-full w-1 bg-slate-400"></div>
+                  <div class="h-full w-2 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-full w-1 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-[80%] w-1.5 bg-slate-400"></div>
+                  <div class="h-full w-1 bg-slate-400"></div>
+                  <div class="h-full w-2 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-[90%] w-1 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                  <div class="h-full w-1.5 bg-slate-400"></div>
+                  <div class="h-full w-1 bg-slate-400"></div>
+                  <div class="h-full w-0.5 bg-slate-400"></div>
+                </div>
+                <span
+                  class="mt-1 font-mono text-[8.5px] tracking-[0.2em] text-slate-500"
+                >
+                  8943-XYZ-90210
+                </span>
+              </div>
+
+              {/* Indicador de Flip (Click) */}
+              <div
+                class="absolute right-5 bottom-5 z-20 animate-pulse text-indigo-400/70"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"
+                  ></path>
+                  <path d="M21 3v5h-5"></path>
+                </svg>
+              </div>
+            </div>
+
+            {/* ======================= CARA TRASERA ======================= */}
+            <div
+              class="absolute inset-0 flex h-full w-full [transform:rotateY(-180deg)] flex-col items-center justify-center rounded-[2.5rem] border border-white/10 bg-slate-900/10 px-10 py-12 shadow-2xl shadow-black/40 backdrop-blur-xl backface-hidden"
+            >
+              {/* Lanyard Hole en la parte trasera también (alineado) */}
+              <div
+                class="absolute top-4 left-1/2 z-30 h-3 w-16 -translate-x-1/2 rounded-full bg-slate-950/40 shadow-inner ring-1 ring-white/10 ring-inset"
+              >
+              </div>
+
+              {/* Textura de Granulado en la parte trasera también */}
+              <div
+                class="pointer-events-none absolute inset-0 z-0 opacity-[0.08] mix-blend-overlay"
+                style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+              >
+              </div>
+              <div
+                class="pointer-events-none absolute inset-0 z-10 rounded-[2.5rem] ring-1 ring-white/10 ring-inset"
+              >
+              </div>
+
+              <div
+                class="relative z-20 mt-[-10px] flex w-full flex-col items-center"
+              >
+                <h2
+                  class="relative z-20 font-mono text-[32px] font-bold tracking-widest text-white"
+                >
+                  Get in Touch
+                </h2>
+
+                <div
+                  class="relative z-20 mt-6 mb-8 w-full max-w-[240px] border-t border-white/10"
+                >
+                </div>
+
+                <div class="relative z-20 flex w-full flex-col gap-5 px-4">
+                  <a
+                    href="https://github.com/ajrojasfuentes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-link group/btn relative flex w-full items-center justify-between overflow-hidden rounded-xl border border-white/5 bg-transparent px-6 py-5 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl opacity-0 transition-opacity duration-700 group-hover/btn:opacity-100"
+                    >
+                      <div
+                        class="nebula-flow-wrap absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-flow"></div>
+                      </div>
+                      <div
+                        class="nebula-blob-layer absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-blob blob-1"></div>
+                        <div class="nebula-blob blob-2"></div>
+                        <div class="nebula-blob blob-3"></div>
+                        <div class="nebula-blob blob-4"></div>
+                        <div class="nebula-blob blob-5"></div>
+                        <div class="nebula-blob blob-6"></div>
+                      </div>
                     </div>
-                  )
-                }
-              </div>
-            </div>
+                    <div class="relative z-10">
+                      <Github
+                        size={28}
+                        class="text-indigo-300 transition-colors duration-300 group-hover/btn:text-white"
+                      />
+                    </div>
+                    <span
+                      class="relative z-10 font-mono text-base font-light tracking-widest text-slate-300 transition-colors duration-300 group-hover/btn:text-white"
+                      >GITHUB</span
+                    >
+                  </a>
 
-            {/* Quote */}
-            <div class="relative mt-8">
-              <div class="absolute -left-4 top-0 font-serif text-4xl leading-none text-white/10">
-                "
-              </div>
-              <p class="bg-gradient-to-r from-white via-indigo-100 to-slate-300 bg-clip-text text-lg font-medium italic leading-relaxed text-transparent md:text-xl">
-                I turn complex problems into creative and innovative solutions. There is no challenge I cannot solve, and no solution I cannot reach.
-              </p>
-            </div>
+                  <a
+                    href="https://linkedin.com/in/ajrojasfuentes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-link group/btn relative flex w-full items-center justify-between overflow-hidden rounded-xl border border-white/5 bg-transparent px-5 py-4 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl opacity-0 transition-opacity duration-700 group-hover/btn:opacity-100"
+                    >
+                      <div
+                        class="nebula-flow-wrap absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-flow"></div>
+                      </div>
+                      <div
+                        class="nebula-blob-layer absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-blob blob-1"></div>
+                        <div class="nebula-blob blob-2"></div>
+                        <div class="nebula-blob blob-3"></div>
+                        <div class="nebula-blob blob-4"></div>
+                        <div class="nebula-blob blob-5"></div>
+                        <div class="nebula-blob blob-6"></div>
+                      </div>
+                    </div>
+                    <div class="relative z-10">
+                      <Linkedin
+                        size={24}
+                        class="text-indigo-300 transition-colors duration-300 group-hover/btn:text-white"
+                      />
+                    </div>
+                    <span
+                      class="relative z-10 font-mono text-sm font-light tracking-widest text-slate-300 transition-colors duration-300 group-hover/btn:text-white"
+                      >LINKEDIN</span
+                    >
+                  </a>
 
-            {/* Original Bio Content */}
-            <div class="mt-6 w-full border-t border-white/10 pt-6 text-base leading-relaxed text-slate-400 transition-colors group-hover:text-slate-300">
-              <Content />
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=ajrojasfuentes@gmail.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="contact-link group/btn relative flex w-full items-center justify-between overflow-hidden rounded-xl border border-white/5 bg-transparent px-5 py-4 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl opacity-0 transition-opacity duration-700 group-hover/btn:opacity-100"
+                    >
+                      <div
+                        class="nebula-flow-wrap absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-flow"></div>
+                      </div>
+                      <div
+                        class="nebula-blob-layer absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-blob blob-1"></div>
+                        <div class="nebula-blob blob-2"></div>
+                        <div class="nebula-blob blob-3"></div>
+                        <div class="nebula-blob blob-4"></div>
+                        <div class="nebula-blob blob-5"></div>
+                        <div class="nebula-blob blob-6"></div>
+                      </div>
+                    </div>
+                    <div class="relative z-10">
+                      <Mail
+                        size={24}
+                        class="text-indigo-300 transition-colors duration-300 group-hover/btn:text-white"
+                      />
+                    </div>
+                    <span
+                      class="relative z-10 font-mono text-sm font-light tracking-widest text-slate-300 transition-colors duration-300 group-hover/btn:text-white"
+                      >EMAIL_ME</span
+                    >
+                  </a>
+
+                  <a
+                    href="/CV.pdf"
+                    download="Anthony_Rojas_CV.pdf"
+                    class="contact-link group/btn relative flex w-full items-center justify-between overflow-hidden rounded-xl border border-white/5 bg-transparent px-5 py-4 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <div
+                      class="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-xl opacity-0 transition-opacity duration-700 group-hover/btn:opacity-100"
+                    >
+                      <div
+                        class="nebula-flow-wrap absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-flow"></div>
+                      </div>
+                      <div
+                        class="nebula-blob-layer absolute inset-0"
+                        aria-hidden="true"
+                      >
+                        <div class="nebula-blob blob-1"></div>
+                        <div class="nebula-blob blob-2"></div>
+                        <div class="nebula-blob blob-3"></div>
+                        <div class="nebula-blob blob-4"></div>
+                        <div class="nebula-blob blob-5"></div>
+                        <div class="nebula-blob blob-6"></div>
+                      </div>
+                    </div>
+                    <div class="relative z-10">
+                      <FileDown
+                        size={24}
+                        class="text-indigo-300 transition-colors duration-300 group-hover/btn:text-white"
+                      />
+                    </div>
+                    <span
+                      class="relative z-10 font-mono text-sm font-light tracking-widest text-slate-300 transition-colors duration-300 group-hover/btn:text-white"
+                      >DOWNLOAD_CV</span
+                    >
+                  </a>
+                </div>
+
+                <div
+                  class="relative z-20 mt-6 w-full max-w-[220px] border-t border-white/10"
+                >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -102,3 +564,296 @@ const { name, titles, location, statusText } = profileEntry.data;
     </div>
   </div>
 </section>
+
+<style>
+  /* Aplicar fuente Nerd Font DejaVu Sans Mono a TODO el texto del badge */
+  #badge-card,
+  #badge-card * {
+    font-family:
+      "DejaVuSansM Nerd Font", "DejaVuSansMono Nerd Font", "DejaVu Sans Mono",
+      monospace !important;
+  }
+
+  /* ---- Efecto Nebula Hover para Botones ---- */
+  .nebula-flow-wrap {
+    overflow: hidden;
+  }
+  .nebula-flow {
+    position: absolute;
+    inset: -30% -60%;
+    background: linear-gradient(
+      90deg,
+      #7c3aed 0%,
+      #a855f7 16%,
+      #e879f9 33%,
+      #f472b6 50%,
+      #2dd4bf 66%,
+      #38bdf8 83%,
+      #7c3aed 100%
+    );
+    background-size: 200% 100%;
+    background-repeat: repeat-x;
+    filter: blur(40px); /* Desenfoque ajustado para botones */
+    mix-blend-mode: screen;
+    opacity: 0.6;
+    animation: flow-right-to-left 32s linear infinite;
+  }
+  @keyframes flow-right-to-left {
+    from {
+      background-position: 0% 50%;
+    }
+    to {
+      background-position: -200% 50%;
+    }
+  }
+
+  .nebula-blob-layer {
+    overflow: hidden;
+  }
+  .nebula-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(20px); /* Desenfoque ajustado para botones */
+    mix-blend-mode: screen;
+    opacity: 0.75;
+    will-change: transform, border-radius;
+  }
+  .blob-1 {
+    width: 52%;
+    height: 52%;
+    top: -10%;
+    left: -6%;
+    background: radial-gradient(circle at 35% 35%, #a855f7, transparent 70%);
+    animation:
+      drift-1 30s ease-in-out infinite alternate,
+      morph-1 22s ease-in-out infinite alternate;
+  }
+  .blob-2 {
+    width: 46%;
+    height: 46%;
+    top: -4%;
+    right: -8%;
+    background: radial-gradient(circle at 60% 40%, #7c3aed, transparent 70%);
+    animation:
+      drift-2 34s ease-in-out infinite alternate,
+      morph-2 25s ease-in-out infinite alternate;
+    animation-delay:
+      -6s,
+      -4s;
+  }
+  .blob-3 {
+    width: 48%;
+    height: 48%;
+    bottom: -8%;
+    left: 8%;
+    background: radial-gradient(circle at 45% 55%, #e879f9, transparent 70%);
+    animation:
+      drift-3 27s ease-in-out infinite alternate,
+      morph-3 20s ease-in-out infinite alternate;
+    animation-delay:
+      -12s,
+      -8s;
+  }
+  .blob-4 {
+    width: 40%;
+    height: 40%;
+    bottom: -6%;
+    right: 4%;
+    background: radial-gradient(circle at 50% 50%, #f472b6, transparent 70%);
+    animation:
+      drift-1 36s ease-in-out infinite alternate-reverse,
+      morph-2 26s ease-in-out infinite alternate;
+    animation-delay:
+      -20s,
+      -14s;
+  }
+  .blob-5 {
+    width: 44%;
+    height: 44%;
+    top: 20%;
+    left: 26%;
+    background: radial-gradient(circle at 50% 50%, #2dd4bf, transparent 70%);
+    animation:
+      drift-2 31s ease-in-out infinite alternate-reverse,
+      morph-3 28s ease-in-out infinite alternate;
+    animation-delay:
+      -9s,
+      -18s;
+  }
+  .blob-6 {
+    width: 42%;
+    height: 42%;
+    top: 4%;
+    right: 20%;
+    background: radial-gradient(circle at 50% 50%, #38bdf8, transparent 70%);
+    animation:
+      drift-3 35s ease-in-out infinite alternate,
+      morph-1 19s ease-in-out infinite alternate;
+    animation-delay:
+      -16s,
+      -5s;
+  }
+
+  @keyframes drift-1 {
+    0% {
+      transform: translate(0%, 0%) scale(1);
+    }
+    50% {
+      transform: translate(12%, -5%) scale(1.15);
+    }
+    100% {
+      transform: translate(-10%, 6%) scale(0.88);
+    }
+  }
+  @keyframes drift-2 {
+    0% {
+      transform: translate(0%, 0%) scale(1);
+    }
+    50% {
+      transform: translate(-13%, 4%) scale(0.87);
+    }
+    100% {
+      transform: translate(11%, -6%) scale(1.13);
+    }
+  }
+  @keyframes drift-3 {
+    0% {
+      transform: translate(0%, 0%) scale(1);
+    }
+    50% {
+      transform: translate(9%, 7%) scale(1.1);
+    }
+    100% {
+      transform: translate(-12%, -4%) scale(0.9);
+    }
+  }
+
+  @keyframes morph-1 {
+    0% {
+      border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    }
+    50% {
+      border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+    }
+    100% {
+      border-radius: 30% 70% 55% 45% / 65% 35% 65% 35%;
+    }
+  }
+  @keyframes morph-2 {
+    0% {
+      border-radius: 55% 45% 40% 60% / 40% 55% 45% 60%;
+    }
+    50% {
+      border-radius: 35% 65% 60% 40% / 60% 35% 65% 40%;
+    }
+    100% {
+      border-radius: 65% 35% 45% 55% / 45% 65% 35% 55%;
+    }
+  }
+  @keyframes morph-3 {
+    0% {
+      border-radius: 48% 52% 65% 35% / 55% 40% 60% 45%;
+    }
+    50% {
+      border-radius: 30% 70% 40% 60% / 35% 65% 30% 70%;
+    }
+    100% {
+      border-radius: 62% 38% 55% 45% / 60% 45% 55% 40%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nebula-blob,
+    .nebula-flow {
+      animation: none !important;
+    }
+  }
+
+  /* Animación emisiva y fluida "Neon Nebula" en diagonal */
+  @keyframes fluid-nebula {
+    0% {
+      background-position: 100% 0%;
+    }
+    50% {
+      background-position: 0% 100%;
+    }
+    100% {
+      background-position: 100% 0%;
+    }
+  }
+  .animate-fluid-nebula {
+    background: linear-gradient(
+      to bottom left,
+      #d946ef,
+      #8b5cf6,
+      #3b82f6,
+      #ec4899,
+      #8b5cf6
+    );
+    background-size: 400% 400%;
+    animation: fluid-nebula 12s ease-in-out infinite;
+  }
+
+  /* Clases de 3D / Flip */
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Estado Volteado */
+  #badge-card.is-flipped {
+    transform: rotateY(-180deg);
+  }
+</style>
+
+<script>
+  // Lógica para voltear el gafete y para seguimiento interactivo 3D con el cursor
+  const badgeContainer = document.getElementById("badge-container");
+  const badgeTilt = document.getElementById("badge-tilt");
+  const badgeCard = document.getElementById("badge-card");
+
+  if (badgeContainer && badgeTilt && badgeCard) {
+    // 1. Flip de la tarjeta al hacer click
+    badgeContainer.addEventListener("click", () => {
+      badgeCard.classList.toggle("is-flipped");
+    });
+
+    // 1b. Evitar que el flip ocurra al dar click en los enlaces de contacto
+    const contactLinks = document.querySelectorAll(".contact-link");
+    contactLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    });
+
+    // Preferencia de sistema de reducir movimiento
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // 2. Inclinación 3D dinámica basada en TiltCard
+    if (!reducedMotion) {
+      badgeContainer.addEventListener("mousemove", (e) => {
+        const rect = badgeContainer.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) return;
+
+        // Exact same logic as TiltCard.tsx but with reduced intensity
+        const x = (e.clientX - rect.left - rect.width / 2) / 35;
+        const y = -(e.clientY - rect.top - rect.height / 2) / 35;
+
+        const rotateX = Math.max(-5, Math.min(5, y));
+        const rotateY = Math.max(-5, Math.min(5, x));
+
+        badgeTilt.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      // 3. Restaurar la inclinación cuando el cursor sale
+      badgeContainer.addEventListener("mouseleave", () => {
+        badgeTilt.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    }
+  }
+</script>
