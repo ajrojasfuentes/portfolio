@@ -1,0 +1,175 @@
+---
+import { Reveal } from "@/components/ui/Reveal";
+import IdCardFront from "./IdCardFront.astro";
+import IdCardBack from "./IdCardBack.astro";
+
+interface ProfileData {
+  name: string;
+  titles: string[];
+  email?: string | undefined;
+  tel?: string | undefined;
+  location?: string | undefined;
+  statusText?: string | undefined;
+  linkedin?: string | undefined;
+  github?: string | undefined;
+  cvLink?: string | undefined;
+  phrase?: string | undefined;
+  description?: string | undefined;
+}
+
+interface Props {
+  profile: ProfileData;
+}
+
+const { profile } = Astro.props;
+---
+
+<div
+  id="badge-container"
+  class="group relative w-full max-w-[480px] cursor-pointer transition-all duration-500 ease-out hover:-translate-y-0.5"
+  style="perspective: 1200px;"
+>
+  <Reveal client:load>
+    {/* Tarjeta 3D que gira (Flip) */}
+    <div
+      id="badge-card"
+      class="transform-style-3d relative w-full transition-transform duration-700 ease-in-out"
+    >
+      <IdCardFront profile={profile} />
+      <IdCardBack profile={profile} />
+    </div>
+  </Reveal>
+</div>
+
+<style is:global>
+  /* Aplicar fuente Nerd Font DejaVu Sans Mono a TODO el texto del badge */
+  #badge-card,
+  #badge-card * {
+    font-family:
+      "DejaVuSansM Nerd Font", "DejaVuSansMono Nerd Font", "DejaVu Sans Mono",
+      monospace !important;
+  }
+
+  .transform-style-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Estado Volteado */
+  #badge-card.is-flipped {
+    transform: rotateY(-180deg);
+  }
+
+  /* Control de Visibilidad y Transiciones de las Caras */
+  #badge-card > div {
+    transition:
+      visibility 0s 0.25s,
+      opacity 0.25s ease-in-out,
+      border-color 0.5s ease-out,
+      box-shadow 0.5s ease-out;
+  }
+
+  /* Cara inactiva (se oculta) */
+  #badge-card:not(.is-flipped) > :nth-child(2),
+  #badge-card.is-flipped > :nth-child(1) {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Cara activa (se muestra) */
+  #badge-card:not(.is-flipped) > :nth-child(1),
+  #badge-card.is-flipped > :nth-child(2) {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+</style>
+
+<script>
+  import { applyAurora, applyAuroraAll, type AuroraConfig } from "aurora-fluid";
+
+  // 1. Configuración para botones circulares (pequeños)
+  const iconConfig: AuroraConfig = {
+    colors: [
+      { color: "#6B00FF" },
+      { color: "#B300FF" },
+      { color: "#D953DB" },
+      { color: "#53DBA2" },
+      { color: "#2DCDD2" },
+      { color: "#BB93ED" },
+    ],
+    blur: "5px",
+    opacity: 0.35,
+    blend: "soft-light",
+    blobs: 6,
+    blobDrift: 3,
+    blobDeformation: 4,
+    blobChaos: 4,
+    duration: "25s",
+    waveWidth: "200%",
+  };
+
+  // 2. Configuración para botones completos (rectangulares grandes)
+  const fullConfig: AuroraConfig = {
+    colors: [
+      { color: "#BB93ED" },
+      { color: "#2DCDD2" },
+      { color: "#53DBA2" },
+      { color: "#D953DB" },
+      { color: "#B300FF" },
+      { color: "#6B00FF" },
+    ],
+    blur: "10px",
+    opacity: 0.35,
+    blend: "soft-light",
+    blobs: 6,
+    blobDrift: 3,
+    blobDeformation: 4,
+    blobChaos: 4,
+    duration: "60s",
+    waveWidth: "300%",
+  };
+
+  applyAuroraAll(".btn-aurora-icon", iconConfig);
+  applyAuroraAll(".btn-aurora-full", fullConfig);
+
+  // 3. Indicador de triángulo superior
+  const triangle = document.getElementById("badge-triangle-indicator");
+  if (triangle) {
+    applyAurora(triangle, {
+      colors: [
+        { color: "#2DD2C4" },
+        { color: "#D953DB" },
+        { color: "#B300FF" },
+        { color: "#6B00FF" },
+      ],
+      duration: "15s",
+      blur: "4px",
+      opacity: 1,
+      blend: "normal",
+    });
+  }
+
+  // 4. Lógica para voltear el gafete (solo flip, sin tilt)
+  const badgeContainer = document.getElementById("badge-container");
+  const badgeCard = document.getElementById("badge-card");
+
+  if (badgeContainer && badgeCard) {
+    badgeContainer.addEventListener("click", () => {
+      badgeCard.classList.toggle("is-flipped");
+    });
+
+    const contactLinks = document.querySelectorAll(".contact-link");
+    contactLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    });
+  }
+</script>

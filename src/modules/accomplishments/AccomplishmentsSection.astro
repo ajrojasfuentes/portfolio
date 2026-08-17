@@ -22,7 +22,7 @@ const accomplishments = await getSortedAccomplishments();
         return (
           <Reveal client:visible delay={i * 80}>
             <div
-              class="flex h-full items-start gap-4 rounded-2xl border p-4 md:p-5 transition-transform hover:-translate-x-1 hover:border-emerald-500/30"
+              class="flex h-full items-start gap-4 rounded-2xl border p-4 transition-transform hover:-translate-x-1 hover:border-emerald-500/30 md:p-5"
               style="background-color: var(--color-surface); border-color: var(--color-border-soft)"
             >
               <span
@@ -32,8 +32,10 @@ const accomplishments = await getSortedAccomplishments();
                 <ArrowUpRight size={18} color={ACCENTS.accomplishments} />
               </span>
               <div>
-                <h3 class="mb-1 font-medium text-white text-sm md:text-base">{acc.data.title}</h3>
-                <div class="text-xs md:text-sm text-slate-400">
+                <h3 class="mb-1 text-sm font-medium text-white md:text-base">
+                  {acc.data.title}
+                </h3>
+                <div class="text-xs text-slate-400 md:text-sm">
                   <Content />
                 </div>
                 {acc.data.date && (

@@ -1,24 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
 export async function getSortedProjects() {
-  const projects = await getCollection('projects');
-  return projects.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
+  const projects = await getCollection("projects");
+  return projects.sort(
+    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+  );
 }
 
 export async function getSortedPublications() {
-  const publications = await getCollection('publications');
-  return publications.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
+  const publications = await getCollection("publications");
+  return publications.sort(
+    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+  );
 }
 
 function parseDateStrings(period: string) {
-  const parts = period.replace(/–/g, '-').split('-').map(s => s.trim());
-  const startStr = parts[0] || '';
-  const endStr = parts.length > 1 ? (parts[1] || '') : startStr;
+  const parts = period
+    .replace(/–/g, "-")
+    .split("-")
+    .map((s) => s.trim());
+  const startStr = parts[0] || "";
+  const endStr = parts.length > 1 ? parts[1] || "" : startStr;
 
   const parseSingle = (str: string) => {
     if (!str) return 0;
-    if (str.toLowerCase() === 'present') return Infinity;
+    if (str.toLowerCase() === "present") return Infinity;
     const date = new Date(str);
     return isNaN(date.getTime()) ? 0 : date.getTime();
   };
@@ -37,11 +44,11 @@ const CATEGORY_PRIORITY: Record<string, number> = {
 };
 
 export async function getSortedExperience() {
-  const experience = await getCollection('experience');
+  const experience = await getCollection("experience");
   return experience.sort((a: any, b: any) => {
     const datesA = parseDateStrings(a.data.period);
     const datesB = parseDateStrings(b.data.period);
-    
+
     // 1. End date descending (newest first)
     if (datesB.end !== datesA.end) {
       return datesB.end - datesA.end;
@@ -58,11 +65,15 @@ export async function getSortedExperience() {
 }
 
 export async function getSortedCertifications() {
-  const certifications = await getCollection('certifications');
-  return certifications.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
+  const certifications = await getCollection("certifications");
+  return certifications.sort(
+    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+  );
 }
 
 export async function getSortedAccomplishments() {
-  const accomplishments = await getCollection('accomplishments');
-  return accomplishments.sort((a: any, b: any) => (a.data.order || 0) - (b.data.order || 0));
+  const accomplishments = await getCollection("accomplishments");
+  return accomplishments.sort(
+    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+  );
 }

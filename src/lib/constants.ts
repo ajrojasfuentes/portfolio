@@ -1,16 +1,19 @@
 export const ACCENTS = {
-  home: '#2DD4BF',
-  projects: '#F5A623',
-  publications: '#A78BFA',
-  experience: '#38BDF8',
-  certifications: '#FB7185',
-  accomplishments: '#34D399',
+  home: "#2DD4BF",
+  projects: "#F5A623",
+  publications: "#A78BFA",
+  experience: "#38BDF8",
+  certifications: "#FB7185",
+  accomplishments: "#34D399",
 };
 
 export const hexToRgba = (hex: string, alpha = 1) => {
-  let clean = hex.replace('#', '');
+  let clean = hex.replace("#", "");
   if (clean.length === 3) {
-    clean = clean.split('').map(c => c + c).join('');
+    clean = clean
+      .split("")
+      .map((c) => c + c)
+      .join("");
   }
   const bigint = parseInt(clean, 16);
   const r = (bigint >> 16) & 255;
@@ -20,10 +23,10 @@ export const hexToRgba = (hex: string, alpha = 1) => {
 };
 
 export const NAV_LINKS = [
-  { name: 'Home', href: '#home' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Publications', href: '#publications' },
-  { name: 'Certifications', href: '#certifications' },
-  { name: 'Accomplishments', href: '#accomplishments' },
+  { name: "Home", href: "#home" },
+  { name: "Experience", href: "#experience" },
+  { name: "Projects", href: "#projects" },
+  { name: "Publications", href: "#publications" },
+  { name: "Certifications", href: "#certifications" },
+  { name: "Accomplishments", href: "#accomplishments" },
 ];

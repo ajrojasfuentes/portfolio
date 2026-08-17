@@ -1,32 +1,43 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Briefcase, HeartHandshake, Rocket, CalendarDays, ArrowRight, MousePointerClick, Flag } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Briefcase,
+  HeartHandshake,
+  Rocket,
+  CalendarDays,
+  ArrowRight,
+  MousePointerClick,
+  Flag,
+} from "lucide-react";
 
-const CATEGORIES: Record<string, { label: string; icon: React.ElementType; color: string; glow: string }> = {
+const CATEGORIES: Record<
+  string,
+  { label: string; icon: React.ElementType; color: string; glow: string }
+> = {
   job: {
-    label: 'Job',
+    label: "Job",
     icon: Briefcase,
-    color: '#38bdf8',
-    glow: 'rgba(56, 189, 248, 0.4)',
+    color: "#38bdf8",
+    glow: "rgba(56, 189, 248, 0.4)",
   },
   volunteering: {
-    label: 'Volunteering',
+    label: "Volunteering",
     icon: HeartHandshake,
-    color: '#f472b6',
-    glow: 'rgba(244, 114, 182, 0.4)',
+    color: "#f472b6",
+    glow: "rgba(244, 114, 182, 0.4)",
   },
   project: {
-    label: 'Project',
+    label: "Project",
     icon: Rocket,
-    color: '#34d399',
-    glow: 'rgba(52, 211, 153, 0.4)',
+    color: "#34d399",
+    glow: "rgba(52, 211, 153, 0.4)",
   },
   milestone: {
-    label: 'Milestone',
+    label: "Milestone",
     icon: Flag,
-    color: '#fbbf24',
-    glow: 'rgba(251, 191, 36, 0.4)',
-  }
+    color: "#fbbf24",
+    glow: "rgba(251, 191, 36, 0.4)",
+  },
 };
 
 export interface TimelineEntry {
@@ -46,32 +57,51 @@ interface FlipCardProps {
   onFlip: () => void;
 }
 
-const MilestoneNode = ({ entry, index }: { entry: TimelineEntry; index: number }) => {
+const MilestoneNode = ({
+  entry,
+  index,
+}: {
+  entry: TimelineEntry;
+  index: number;
+}) => {
   const cat = CATEGORIES.milestone!;
   const Icon = cat.icon;
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ delay: index * 0.1, type: "spring" }}
-      className="relative w-full z-30 py-2"
+      className="relative z-30 w-full py-2"
     >
-      <div 
-        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full border-2 shadow-xl z-10"
-        style={{ borderColor: cat.color, backgroundColor: 'var(--color-bg)', boxShadow: `0 0 20px ${cat.glow}` }}
+      <div
+        className="absolute top-1/2 left-[24px] z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 shadow-xl md:left-[60px] md:h-10 md:w-10"
+        style={{
+          borderColor: cat.color,
+          backgroundColor: "var(--color-bg)",
+          boxShadow: `0 0 20px ${cat.glow}`,
+        }}
       >
-        <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: cat.color }} />
+        <Icon className="h-4 w-4 md:h-5 md:w-5" style={{ color: cat.color }} />
       </div>
 
-      <div className="ml-[50px] md:ml-[100px] w-[calc(100%-66px)] md:w-auto md:pr-4">
-        <div className="px-4 py-3 rounded-xl border inline-flex flex-col shadow-lg backdrop-blur-md"
-             style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border-soft)' }}>
-          <span className="text-white font-bold text-sm md:text-base leading-tight">{entry.role}</span>
-          <span className="text-slate-400 text-[10px] md:text-xs font-mono mt-0.5 capitalize">{entry.period} • {entry.company}</span>
+      <div className="ml-[50px] w-[calc(100%-66px)] md:ml-[100px] md:w-auto md:pr-4">
+        <div
+          className="inline-flex flex-col rounded-xl border px-4 py-3 shadow-lg backdrop-blur-md"
+          style={{
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-border-soft)",
+          }}
+        >
+          <span className="text-sm leading-tight font-bold text-white md:text-base">
+            {entry.role}
+          </span>
+          <span className="mt-0.5 font-mono text-[10px] text-slate-400 capitalize md:text-xs">
+            {entry.period} • {entry.company}
+          </span>
           {entry.shortDesc && (
-            <p className="text-slate-300 text-[11px] md:text-xs mt-2 leading-relaxed max-w-2xl">
+            <p className="mt-2 max-w-2xl text-[11px] leading-relaxed text-slate-300 md:text-xs">
               {entry.shortDesc}
             </p>
           )}
@@ -86,20 +116,20 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
   const Icon = cat.icon;
 
   return (
-    <div className="relative w-full z-20 group py-2">
+    <div className="group relative z-20 w-full py-2">
       {/* Spine Point */}
       <div
-        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full border-4 z-10 transition-all duration-300"
+        className="absolute top-1/2 left-[24px] z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 transition-all duration-300 md:left-[60px] md:h-4 md:w-4"
         style={{
           borderColor: cat.color,
-          backgroundColor: 'var(--color-bg)',
-          boxShadow: isFlipped ? `0 0 15px ${cat.glow}` : 'none',
+          backgroundColor: "var(--color-bg)",
+          boxShadow: isFlipped ? `0 0 15px ${cat.glow}` : "none",
         }}
       />
 
       {/* Connector Line */}
       <div
-        className="absolute left-[24px] md:left-[60px] top-1/2 -translate-y-1/2 h-[2px] z-0 w-[26px] md:w-[40px]"
+        className="absolute top-1/2 left-[24px] z-0 h-[2px] w-[26px] -translate-y-1/2 md:left-[60px] md:w-[40px]"
         style={{
           backgroundImage: `linear-gradient(to right, ${cat.color}60, transparent)`,
         }}
@@ -109,52 +139,75 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
       <motion.div
         initial={{ opacity: 0, x: 50 }}
         whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ delay: index * 0.1, type: 'spring', stiffness: 100 }}
-        className="ml-[50px] md:ml-[100px] w-[calc(100%-66px)] md:w-auto md:mr-8 md:max-w-[800px] cursor-pointer"
-        style={{ perspective: '1500px' }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
+        className="ml-[50px] w-[calc(100%-66px)] cursor-pointer md:mr-8 md:ml-[100px] md:w-auto md:max-w-[800px]"
+        style={{ perspective: "1500px" }}
         onClick={onFlip}
       >
         <motion.div
-          className="w-full relative"
+          className="relative w-full"
           animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20 }}
-          style={{ transformStyle: 'preserve-3d' }}
+          transition={{
+            duration: 0.6,
+            type: "spring",
+            stiffness: 200,
+            damping: 20,
+          }}
+          style={{ transformStyle: "preserve-3d" }}
         >
           {/* FRONT FACE */}
           <div
-            className="relative w-full min-h-[200px] rounded-2xl border overflow-hidden transition-colors group-hover:border-white/20"
+            className="relative min-h-[200px] w-full overflow-hidden rounded-2xl border transition-colors group-hover:border-white/20"
             style={{
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-              backgroundColor: 'var(--color-surface)',
-              borderColor: 'var(--color-border-soft)',
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              backgroundColor: "var(--color-surface)",
+              borderColor: "var(--color-border-soft)",
             }}
           >
             {/* Top Accent Bar */}
-            <div className="absolute top-0 left-0 w-full h-1" style={{ backgroundColor: cat.color }} />
             <div
-              className="absolute top-0 left-0 w-full h-24 opacity-[0.04]"
-              style={{ background: `linear-gradient(to bottom, ${cat.color}, transparent)` }}
+              className="absolute top-0 left-0 h-1 w-full"
+              style={{ backgroundColor: cat.color }}
+            />
+            <div
+              className="absolute top-0 left-0 h-24 w-full opacity-[0.04]"
+              style={{
+                background: `linear-gradient(to bottom, ${cat.color}, transparent)`,
+              }}
             />
 
-            <div className="p-4 md:p-5 flex flex-col">
+            <div className="flex flex-col p-4 md:p-5">
               {/* Header */}
-              <div className="flex justify-between items-start mb-3 md:mb-4">
+              <div className="mb-3 flex items-start justify-between md:mb-4">
                 <div className="flex items-center gap-3">
                   <div
-                    className="w-8 h-8 md:w-10 md:h-10 rounded-xl border flex items-center justify-center shadow-inner shrink-0"
-                    style={{ backgroundColor: 'var(--color-surface-2)', borderColor: 'var(--color-border-soft)' }}
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border shadow-inner md:h-10 md:w-10"
+                    style={{
+                      backgroundColor: "var(--color-surface-2)",
+                      borderColor: "var(--color-border-soft)",
+                    }}
                   >
-                    <Icon className="w-4 h-4 md:w-5 md:h-5" style={{ color: cat.color }} />
+                    <Icon
+                      className="h-4 w-4 md:h-5 md:w-5"
+                      style={{ color: cat.color }}
+                    />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold text-sm md:text-base leading-tight">{entry.role}</h3>
-                    <p className="text-xs md:text-sm font-medium" style={{ color: cat.color }}>{entry.company}</p>
+                    <h3 className="text-sm leading-tight font-bold text-white md:text-base">
+                      {entry.role}
+                    </h3>
+                    <p
+                      className="text-xs font-medium md:text-sm"
+                      style={{ color: cat.color }}
+                    >
+                      {entry.company}
+                    </p>
                   </div>
                 </div>
                 <span
-                  className="text-[9px] md:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 md:px-2.5 md:py-1 rounded-md border shrink-0 ml-2"
+                  className="ml-2 shrink-0 rounded-md border px-2 py-0.5 text-[9px] font-bold tracking-wider uppercase md:px-2.5 md:py-1 md:text-[10px]"
                   style={{
                     color: cat.color,
                     borderColor: `${cat.color}30`,
@@ -167,20 +220,30 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
 
               {/* Duration Badge */}
               <div
-                className="inline-flex items-center gap-2 rounded-lg px-2.5 py-1.5 md:px-3 md:py-2 w-fit mb-3 md:mb-4 border"
-                style={{ backgroundColor: 'var(--color-surface-2)', borderColor: 'var(--color-border-soft)' }}
+                className="mb-3 inline-flex w-fit items-center gap-2 rounded-lg border px-2.5 py-1.5 md:mb-4 md:px-3 md:py-2"
+                style={{
+                  backgroundColor: "var(--color-surface-2)",
+                  borderColor: "var(--color-border-soft)",
+                }}
               >
-                <CalendarDays className="w-3 h-3 md:w-4 md:h-4" style={{ color: cat.color }} />
-                <span className="text-xs md:text-sm font-mono text-slate-300">{entry.period}</span>
+                <CalendarDays
+                  className="h-3 w-3 md:h-4 md:w-4"
+                  style={{ color: cat.color }}
+                />
+                <span className="font-mono text-xs text-slate-300 md:text-sm">
+                  {entry.period}
+                </span>
               </div>
 
               {/* Short Description & Interactive Hint */}
-              <div className="flex items-end justify-between gap-2 md:gap-4 mt-auto">
+              <div className="mt-auto flex items-end justify-between gap-2 md:gap-4">
                 {entry.shortDesc && (
-                  <p className="text-slate-400 text-xs md:text-sm leading-relaxed max-w-[85%]">{entry.shortDesc}</p>
+                  <p className="max-w-[85%] text-xs leading-relaxed text-slate-400 md:text-sm">
+                    {entry.shortDesc}
+                  </p>
                 )}
-                <div className="flex flex-col items-center gap-1 opacity-50 group-hover:opacity-100 transition-opacity shrink-0">
-                  <MousePointerClick className="w-4 h-4 md:w-5 md:h-5 text-slate-300 animate-bounce" />
+                <div className="flex shrink-0 flex-col items-center gap-1 opacity-50 transition-opacity group-hover:opacity-100">
+                  <MousePointerClick className="h-4 w-4 animate-bounce text-slate-300 md:h-5 md:w-5" />
                 </div>
               </div>
             </div>
@@ -188,35 +251,41 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
 
           {/* BACK FACE (Details) */}
           <div
-            className="absolute inset-0 w-full h-full rounded-2xl border overflow-hidden"
+            className="absolute inset-0 h-full w-full overflow-hidden rounded-2xl border"
             style={{
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-              background: 'linear-gradient(to bottom right, var(--color-surface-2), var(--color-surface))',
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+              background:
+                "linear-gradient(to bottom right, var(--color-surface-2), var(--color-surface))",
               borderColor: `${cat.color}30`,
             }}
           >
             {/* Watermark Icon */}
             <Icon
-              className="absolute -bottom-10 -right-10 w-48 h-48 opacity-[0.03] rotate-12 pointer-events-none"
+              className="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rotate-12 opacity-[0.03]"
               style={{ color: cat.color }}
             />
 
-            <div className="p-6 h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-4 pb-3 border-b shrink-0" style={{ borderColor: 'var(--color-border-soft)' }}>
-                <Icon className="w-4 h-4" style={{ color: cat.color }} />
-                <h4 className="text-white font-semibold text-sm">In-depth Details</h4>
+            <div className="flex h-full flex-col p-6">
+              <div
+                className="mb-4 flex shrink-0 items-center gap-2 border-b pb-3"
+                style={{ borderColor: "var(--color-border-soft)" }}
+              >
+                <Icon className="h-4 w-4" style={{ color: cat.color }} />
+                <h4 className="text-sm font-semibold text-white">
+                  In-depth Details
+                </h4>
               </div>
 
               {/* Rendered MDX content */}
               <div
-                className="flex-grow overflow-y-auto pr-2 text-slate-300 text-sm leading-relaxed prose prose-invert max-w-none prose-sm"
+                className="prose prose-invert prose-sm max-w-none flex-grow overflow-y-auto pr-2 text-sm leading-relaxed text-slate-300"
                 dangerouslySetInnerHTML={{ __html: entry.bodyHtml }}
               />
 
-              <div className="mt-4 pt-3 text-xs text-slate-500 font-mono text-center flex justify-center items-center gap-2 shrink-0">
-                <ArrowRight className="w-3 h-3 rotate-180" /> Click to revert
+              <div className="mt-4 flex shrink-0 items-center justify-center gap-2 pt-3 text-center font-mono text-xs text-slate-500">
+                <ArrowRight className="h-3 w-3 rotate-180" /> Click to revert
               </div>
             </div>
           </div>
@@ -226,7 +295,11 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
   );
 };
 
-export default function ExperienceTimeline({ entries }: { entries: TimelineEntry[] }) {
+export default function ExperienceTimeline({
+  entries,
+}: {
+  entries: TimelineEntry[];
+}) {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const handleFlip = (id: string) => {
@@ -234,28 +307,29 @@ export default function ExperienceTimeline({ entries }: { entries: TimelineEntry
   };
 
   return (
-    <div className="w-full relative">
-      <div className="relative w-full flex flex-col gap-8">
+    <div className="relative w-full">
+      <div className="relative flex w-full flex-col gap-8">
         {/* Vertical Spine Line */}
         <div
-          className="absolute left-[24px] md:left-[60px] top-0 bottom-0 w-[2px] -translate-x-1/2 z-0 rounded-full overflow-hidden"
-          style={{ backgroundColor: 'var(--color-border-soft)' }}
+          className="absolute top-0 bottom-0 left-[24px] z-0 w-[2px] -translate-x-1/2 overflow-hidden rounded-full md:left-[60px]"
+          style={{ backgroundColor: "var(--color-border-soft)" }}
         >
           {/* Animated Energy Flow */}
           <motion.div
-            className="absolute left-1/2 w-[4px] h-64 -translate-x-1/2 rounded-full opacity-80"
+            className="absolute left-1/2 h-64 w-[4px] -translate-x-1/2 rounded-full opacity-80"
             style={{
-              background: 'linear-gradient(to bottom, transparent, #c084fc, #38bdf8, transparent)',
-              filter: 'blur(2px)',
+              background:
+                "linear-gradient(to bottom, transparent, #c084fc, #38bdf8, transparent)",
+              filter: "blur(2px)",
             }}
-            animate={{ top: ['-20%', '120%'] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+            animate={{ top: ["-20%", "120%"] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
           />
         </div>
 
         {/* Timeline Cards */}
-        {entries.map((entry, index) => (
-          entry.category === 'milestone' ? (
+        {entries.map((entry, index) =>
+          entry.category === "milestone" ? (
             <MilestoneNode key={entry.id} entry={entry} index={index} />
           ) : (
             <FlipCard
@@ -266,7 +340,7 @@ export default function ExperienceTimeline({ entries }: { entries: TimelineEntry
               onFlip={() => handleFlip(entry.id)}
             />
           )
-        ))}
+        )}
       </div>
     </div>
   );

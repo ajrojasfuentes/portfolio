@@ -1,0 +1,68 @@
+---
+import { Github, Linkedin, Mail, FileDown } from "lucide-react";
+
+interface Props {
+  href?: string | undefined;
+  icon: "github" | "linkedin" | "mail" | "cv";
+  label?: string | undefined;
+  variant: "icon" | "full";
+  download?: string | undefined;
+}
+
+const { href, icon, label, variant, download } = Astro.props;
+
+// If no href is provided, don't render the button
+if (!href) {
+  return;
+}
+
+// Component Map for icons
+const IconComponent = {
+  github: Github,
+  linkedin: Linkedin,
+  mail: Mail,
+  cv: FileDown,
+}[icon];
+
+const isIcon = variant === "icon";
+const iconSize = isIcon ? 16 : 24;
+const baseClasses = `contact-link aurora btn-aurora-${variant} aurora-hover relative flex items-center overflow-hidden transition-all will-change-transform isolate`;
+const iconClasses = isIcon
+  ? "group/mini h-9 w-9 justify-center rounded-full border border-white/10 bg-white/5 hover:scale-110 active:scale-95"
+  : "group/btn w-full justify-between rounded-xl border border-white/5 bg-transparent px-5 py-4 hover:scale-[1.02] active:scale-[0.98]";
+
+const innerIconClasses = isIcon
+  ? "relative z-10 text-indigo-300 transition-colors duration-300 group-hover/mini:text-white"
+  : "text-indigo-300 transition-colors duration-300 group-hover/btn:text-white";
+
+// Specific override for github icon size on full button
+const finalIconSize = !isIcon && icon === "github" ? 28 : iconSize;
+const textClass = !isIcon && icon === "github" ? "text-base" : "text-sm";
+const ariaLabel = label || `${icon} link`;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={`${baseClasses} ${iconClasses}`}
+  download={download}
+  aria-label={ariaLabel}
+>
+  {
+    isIcon ? (
+      <IconComponent size={finalIconSize} className={innerIconClasses} />
+    ) : (
+      <>
+        <div class="relative z-10">
+          <IconComponent size={finalIconSize} className={innerIconClasses} />
+        </div>
+        <span
+          class={`relative z-10 font-mono font-light tracking-widest text-slate-300 transition-colors duration-300 group-hover/btn:text-white ${textClass}`}
+        >
+          {label}
+        </span>
+      </>
+    )
+  }
+</a>

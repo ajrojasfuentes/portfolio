@@ -1,5 +1,6 @@
 ---
 import "@/styles/globals.css";
+import "aurora-fluid/aurora.css";
 import Nav from "@/components/layout/Nav";
 import StellarWrapper from "@/components/layout/StellarWrapper";
 
@@ -14,10 +15,7 @@ const { title } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="description"
-      content="Anthony Rojas Fuentes - Data Automation & AI Engineer"
-    />
+    <meta name="description" content="Anthony Rojas Fuentes - AI Engineer" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -26,7 +24,7 @@ const { title } = Astro.props;
   <body class="portfolio-shell min-h-screen">
     <StellarWrapper client:idle />
     <Nav client:load />
-    <main class="mx-auto max-w-6xl px-6 pt-10">
+    <main class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 md:pt-10">
       <slot />
     </main>
     <footer

@@ -1,6 +1,6 @@
-import { defineCollection } from 'astro:content';
-import { z } from 'astro:schema';
-import { glob } from 'astro/loaders';
+import { defineCollection } from "astro:content";
+import { z } from "astro:schema";
+import { glob } from "astro/loaders";
 
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/projects" }),
@@ -11,9 +11,9 @@ const projects = defineCollection({
     tech: z.array(z.string()),
     github: z.string().optional(),
     demo: z.string().optional(),
-    icon: z.string().default('Code2'),
+    icon: z.string().default("Code2"),
     order: z.number().default(0),
-  })
+  }),
 });
 
 const publications = defineCollection({
@@ -25,7 +25,7 @@ const publications = defineCollection({
     authors: z.string(),
     link: z.string().optional(),
     order: z.number().default(0),
-  })
+  }),
 });
 
 const experience = defineCollection({
@@ -34,10 +34,12 @@ const experience = defineCollection({
     role: z.string(),
     company: z.string(),
     period: z.string(),
-    category: z.enum(['job', 'volunteering', 'project', 'milestone']).default('job'),
+    category: z
+      .enum(["job", "volunteering", "project", "milestone"])
+      .default("job"),
     shortDesc: z.string().optional(),
     order: z.number().default(0),
-  })
+  }),
 });
 
 const certifications = defineCollection({
@@ -48,7 +50,7 @@ const certifications = defineCollection({
     date: z.string().optional(),
     credentialId: z.string().optional(),
     order: z.number().default(0),
-  })
+  }),
 });
 
 const accomplishments = defineCollection({
@@ -56,9 +58,9 @@ const accomplishments = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.string().optional(),
-    icon: z.string().default('Star'),
+    icon: z.string().default("Star"),
     order: z.number().default(0),
-  })
+  }),
 });
 
 const about = defineCollection({
@@ -75,7 +77,7 @@ const about = defineCollection({
     cvLink: z.string().optional(),
     phrase: z.string().optional(),
     description: z.string().optional(),
-  })
+  }),
 });
 
 export const collections = {
@@ -84,5 +86,5 @@ export const collections = {
   experience,
   certifications,
   accomplishments,
-  about
+  about,
 };

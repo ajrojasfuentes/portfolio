@@ -41,6 +41,9 @@ importers:
       astro:
         specifier: ^7.0.0
         version: 7.0.8(@astrojs/markdown-remark@7.2.1)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@22.19.19)(jiti@2.7.0)(rollup@4.60.4)(tsx@4.22.3)(yaml@2.9.0)
+      aurora-fluid:
+        specifier: ^1.2.0
+        version: 1.2.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -2467,6 +2470,9 @@ packages:
   async-function@1.0.0:
     resolution: {integrity: sha512-hsU18Ae8CDTR6Kgu9DYf0EbCr/a5iGL0rytQDobUcdpYOKokk8LEjVphnXkDkgpi0wYVsqrXuP0bZxJaTqdgoA==}
     engines: {node: '>= 0.4'}
+
+  aurora-fluid@1.2.0:
+    resolution: {integrity: sha512-p2flSsRPmNMjaf/zwp9/hJaMTSuhhEOL634+fdDhenpdK4AVljIwTGaJONdfGT/sNHgKmKJ8U09zeuKy66hxow==}
 
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
@@ -7590,6 +7596,8 @@ snapshots:
       synckit: 0.11.12
 
   async-function@1.0.0: {}
+
+  aurora-fluid@1.2.0: {}
 
   available-typed-arrays@1.0.7:
     dependencies:

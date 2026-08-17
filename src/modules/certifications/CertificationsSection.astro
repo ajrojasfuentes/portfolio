@@ -14,12 +14,12 @@ const certifications = await getSortedCertifications();
     title="Certifications"
     color={ACCENTS.certifications}
   />
-  <div class="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
     {
       certifications.map((cert, i) => (
         <Reveal client:visible delay={i * 80}>
           <div
-            class="flex h-full flex-col rounded-2xl border p-4 md:p-5 transition-transform hover:-translate-y-1 hover:border-rose-500/30"
+            class="flex h-full flex-col rounded-2xl border p-4 transition-transform hover:-translate-y-1 hover:border-rose-500/30 md:p-5"
             style="background-color: var(--color-surface); border-color: var(--color-border-soft)"
           >
             <div class="mb-4 flex items-start justify-between">
@@ -30,10 +30,12 @@ const certifications = await getSortedCertifications();
                 <ShieldCheck size={20} color={ACCENTS.certifications} />
               </span>
             </div>
-            <h3 class="font-display mb-1 text-sm md:text-base leading-snug font-bold text-white">
+            <h3 class="font-display mb-1 text-sm leading-snug font-bold text-white md:text-base">
               {cert.data.name}
             </h3>
-            <p class="mb-2 text-xs md:text-sm text-slate-400">{cert.data.issuer}</p>
+            <p class="mb-2 text-xs text-slate-400 md:text-sm">
+              {cert.data.issuer}
+            </p>
           </div>
         </Reveal>
       ))

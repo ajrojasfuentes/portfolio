@@ -40,6 +40,10 @@ export const timelineNodeVariants: Variants = {
 /** Tab slide in */
 export const tabSlideVariants: Variants = {
   initial: { x: 20, opacity: 0 },
-  animate: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: { duration: 0.25, ease: "easeOut" },
+  },
   exit: { x: -10, opacity: 0, transition: { duration: 0.15 } },
 };

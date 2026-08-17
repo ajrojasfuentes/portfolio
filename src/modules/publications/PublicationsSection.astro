@@ -26,19 +26,21 @@ const publications = await getSortedPublications();
             >
               <div class="mb-3 flex flex-wrap items-center gap-3">
                 <span
-                  class="inline-block rounded-md border px-2 py-0.5 md:px-2.5 md:py-1 font-mono text-[10px] md:text-xs"
+                  class="inline-block rounded-md border px-2 py-0.5 font-mono text-[10px] md:px-2.5 md:py-1 md:text-xs"
                   style={`color: ${ACCENTS.publications}; border-color: ${hexToRgba(ACCENTS.publications, 0.35)}; background-color: ${hexToRgba(ACCENTS.publications, 0.08)}`}
                 >
                   {pub.data.type}
                 </span>
-                <span class="flex items-center gap-1.5 font-mono text-[10px] md:text-xs text-slate-500">
+                <span class="flex items-center gap-1.5 font-mono text-[10px] text-slate-500 md:text-xs">
                   {pub.data.venue}
                 </span>
               </div>
-              <h3 class="font-display mb-2 text-lg md:text-xl font-bold text-white">
+              <h3 class="font-display mb-2 text-lg font-bold text-white md:text-xl">
                 {pub.data.title}
               </h3>
-              <p class="mb-3 text-xs md:text-sm text-slate-400">{pub.data.authors}</p>
+              <p class="mb-3 text-xs text-slate-400 md:text-sm">
+                {pub.data.authors}
+              </p>
               <div class="mb-5 text-sm leading-relaxed text-slate-300">
                 <Content />
               </div>

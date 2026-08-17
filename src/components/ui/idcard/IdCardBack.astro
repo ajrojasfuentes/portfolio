@@ -1,0 +1,100 @@
+---
+import IdCardButton from "./IdCardButton.astro";
+
+interface ProfileData {
+  name: string;
+  titles: string[];
+  email?: string | undefined;
+  tel?: string | undefined;
+  location?: string | undefined;
+  statusText?: string | undefined;
+  linkedin?: string | undefined;
+  github?: string | undefined;
+  cvLink?: string | undefined;
+  phrase?: string | undefined;
+  description?: string | undefined;
+}
+
+interface Props {
+  profile: ProfileData;
+}
+
+const { profile } = Astro.props;
+---
+
+<div
+  class="absolute inset-0 flex h-full w-full [transform:rotateY(-180deg)] flex-col items-center justify-center overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/20 px-10 py-12 shadow-xl shadow-black/30 backdrop-blur-xl transition-all duration-500 backface-hidden group-hover:border-white/20 group-hover:shadow-2xl group-hover:shadow-indigo-500/10"
+  style="-webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);"
+>
+  {/* Halo / Resplandor Ambiental (idéntico a BentoCard) */}
+  <div
+    class="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-20 blur-3xl transition-opacity duration-700 group-hover:opacity-40"
+    style="background: rgba(168, 85, 247, 0.2);"
+  >
+  </div>
+
+  {/* Lanyard Hole en la parte trasera también (alineado) */}
+  <div
+    class="absolute top-4 left-1/2 z-30 h-3 w-16 -translate-x-1/2 rounded-full bg-slate-950/40 shadow-inner ring-1 ring-white/10 ring-inset"
+  >
+  </div>
+
+  {/* Textura de Granulado */}
+  <div
+    class="pointer-events-none absolute inset-0 z-0 opacity-[0.12] mix-blend-soft-light"
+    style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+  >
+  </div>
+
+  {/* Relieve interno constante */}
+  <div
+    class="pointer-events-none absolute inset-0 z-10 rounded-[2.5rem] ring-1 ring-white/10 ring-inset"
+  >
+  </div>
+
+  <div class="relative z-20 mt-[-10px] flex w-full flex-col items-center">
+    <h2
+      class="relative z-20 font-mono text-[32px] font-bold tracking-widest text-white"
+    >
+      Get in Touch
+    </h2>
+
+    <div
+      class="relative z-20 mt-6 mb-8 w-full max-w-[240px] border-t border-white/10"
+    >
+    </div>
+
+    <div class="relative z-20 flex w-full flex-col gap-5 px-4">
+      <IdCardButton
+        href={profile.github}
+        icon="github"
+        label="GITHUB"
+        variant="full"
+      />
+      <IdCardButton
+        href={profile.linkedin}
+        icon="linkedin"
+        label="LINKEDIN"
+        variant="full"
+      />
+      <IdCardButton
+        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${profile.email}`}
+        icon="mail"
+        label="EMAIL_ME"
+        variant="full"
+      />
+      <IdCardButton
+        href={profile.cvLink}
+        download="Anthony_Rojas_CV.pdf"
+        icon="cv"
+        label="DOWNLOAD_CV"
+        variant="full"
+      />
+    </div>
+
+    <div
+      class="relative z-20 mt-6 w-full max-w-[220px] border-t border-white/10"
+    >
+    </div>
+  </div>
+</div>

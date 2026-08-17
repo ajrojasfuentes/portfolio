@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
 
   --color-bg: #010508;
-  --color-surface: #10182B;
-  --color-surface-2: #16203A;
+  --color-surface: #10182b;
+  --color-surface-2: #16203a;
   --color-border-soft: rgba(255, 255, 255, 0.08);
   --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-text-primary: #E9EEF9;
-  --color-text-secondary: #93A0BD;
-  --color-text-muted: #5C6685;
+  --color-text-primary: #e9eef9;
+  --color-text-secondary: #93a0bd;
+  --color-text-muted: #5c6685;
 
-  --color-accent-home: #2DD4BF;
-  --color-accent-projects: #F5A623;
-  --color-accent-publications: #A78BFA;
-  --color-accent-experience: #38BDF8;
-  --color-accent-certifications: #FB7185;
-  --color-accent-accomplishments: #34D399;
+  --color-accent-home: #2dd4bf;
+  --color-accent-projects: #f5a623;
+  --color-accent-publications: #a78bfa;
+  --color-accent-experience: #38bdf8;
+  --color-accent-certifications: #fb7185;
+  --color-accent-accomplishments: #34d399;
 }
 
 /* Base configuration */
-html { 
+html {
   scroll-behavior: smooth;
   background-color: var(--color-bg);
 }
@@ -34,22 +34,27 @@ body {
   font-family: var(--font-body);
 }
 
-::selection { 
-  background-color: var(--color-accent-home); 
-  color: #06110F; 
+::selection {
+  background-color: var(--color-accent-home);
+  color: #06110f;
 }
 
 /* Scrollbars */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--color-bg); }
-::-webkit-scrollbar-thumb { 
-  background: var(--color-surface-2); 
-  border-radius: 8px; 
-  border: 2px solid var(--color-bg); 
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-2);
+  border-radius: 8px;
+  border: 2px solid var(--color-bg);
 }
 
 /* Focus styles */
-a:focus-visible, button:focus-visible {
+a:focus-visible,
+button:focus-visible {
   outline: 2px solid var(--color-accent-home);
   outline-offset: 3px;
   border-radius: 6px;
@@ -57,7 +62,9 @@ a:focus-visible, button:focus-visible {
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -66,16 +73,24 @@ a:focus-visible, button:focus-visible {
 }
 
 /* Utility classes for layout */
-section[id] { 
-  scroll-margin-top: 96px; 
+section[id] {
+  scroll-margin-top: 96px;
 }
 
 /* Animations */
 @keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
 }
 
 .animate-blob {

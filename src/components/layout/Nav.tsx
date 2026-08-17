@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Terminal } from 'lucide-react';
-import { NAV_LINKS } from '@/lib/constants';
+import React, { useState, useEffect } from "react";
+import { Menu, X, Terminal } from "lucide-react";
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -8,62 +8,71 @@ export default function Nav() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ease-in-out ${
-        scrolled 
-          ? 'py-3 bg-slate-950/60 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]' 
-          : 'py-6 bg-transparent border-b border-transparent'
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ease-in-out ${
+        scrolled
+          ? "border-b border-white/5 bg-slate-950/60 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent py-6"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a href="#home" className="flex items-center gap-2 group transition-transform duration-300 hover:scale-[1.02]">
-          <Terminal size={20} className="text-teal-400 opacity-80 group-hover:opacity-100 transition-opacity" />
-          <span className="font-mono font-bold text-lg tracking-tight text-slate-200 group-hover:text-white transition-colors">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
+        <a
+          href="#home"
+          className="group flex items-center gap-2 transition-transform duration-300 hover:scale-[1.02]"
+        >
+          <Terminal
+            size={20}
+            className="text-teal-400 opacity-80 transition-opacity group-hover:opacity-100"
+          />
+          <span className="font-mono text-lg font-bold tracking-tight text-slate-200 transition-colors group-hover:text-white">
             ajrojasfuentes<span className="text-teal-500/70">.dev</span>
           </span>
         </a>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href} 
-              className="relative font-mono font-bold text-sm tracking-widest text-slate-400 hover:text-teal-300 transition-colors py-2 group"
+            <a
+              key={link.name}
+              href={link.href}
+              className="group relative py-2 font-mono text-sm font-bold tracking-widest text-slate-400 transition-colors hover:text-teal-300"
             >
               {link.name}
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-teal-400 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full" />
+              <span className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-teal-400 transition-transform duration-300 group-hover:scale-x-100" />
             </a>
           ))}
         </div>
 
-        <button 
-          className="md:hidden text-slate-300 hover:text-white transition-colors p-2" 
-          onClick={() => setOpen(!open)} 
+        <button
+          className="p-2 text-slate-300 transition-colors hover:text-white md:hidden"
+          onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
           {open ? <X size={26} /> : <Menu size={26} />}
         </button>
       </div>
 
-      <div 
-        className={`md:hidden absolute top-full left-0 w-full overflow-hidden transition-all duration-300 ease-in-out ${
-          open ? 'max-h-96 opacity-100 border-b border-white/5' : 'max-h-0 opacity-0'
+      <div
+        className={`absolute top-full left-0 w-full overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+          open
+            ? "max-h-96 border-b border-white/5 opacity-100"
+            : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-slate-950/90 backdrop-blur-2xl px-6 py-4 flex flex-col gap-2 shadow-2xl">
+        <div className="flex flex-col gap-2 bg-slate-950/90 px-6 py-4 shadow-2xl backdrop-blur-2xl">
           {NAV_LINKS.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-mono font-bold text-sm tracking-widest text-slate-400 py-3 border-b border-white/5 last:border-b-0 hover:text-teal-300 hover:pl-2 transition-all duration-300 flex items-center"
+              className="flex items-center border-b border-white/5 py-3 font-mono text-sm font-bold tracking-widest text-slate-400 transition-all duration-300 last:border-b-0 hover:pl-2 hover:text-teal-300"
             >
-              <span className="text-teal-500/50 mr-3 text-xs">&gt;</span>{link.name}
+              <span className="mr-3 text-xs text-teal-500/50">&gt;</span>
+              {link.name}
             </a>
           ))}
         </div>

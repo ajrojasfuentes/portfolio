@@ -138,7 +138,11 @@
   top: 0;
   left: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-token-blue), var(--color-token-purple));
+  background: linear-gradient(
+    90deg,
+    var(--color-token-blue),
+    var(--color-token-purple)
+  );
   z-index: 9999;
   transform-origin: left;
   animation: progress linear;
@@ -187,7 +191,7 @@
     border-right: none;
     border-top: 1px solid var(--color-bg-surface-2);
   }
-  
+
   .ide-editor {
     padding: 16px 20px;
   }
