@@ -21,12 +21,22 @@ const VARIANTS: Record<
   right: { axis: "x", scaleAxis: "scaleX", enterPct: "-100%", restPct: "-50%" },
 };
 
-function FloatingStars() {
+interface FloatingStar {
+  top: string;
+  left: string;
+  size: number;
+  duration: number;
+  xMove: number;
+  yMove: number;
+  baseOpacity: number;
+}
+
+function FloatingStars(): React.ReactNode {
   const [mounted, setMounted] = React.useState(false);
-  const [stars, setStars] = React.useState<any[]>([]);
+  const [stars, setStars] = React.useState<FloatingStar[]>([]);
 
   React.useEffect(() => {
-    const generatedStars = Array.from({ length: 40 }).map(() => ({
+    const generatedStars: FloatingStar[] = Array.from({ length: 40 }).map(() => ({
       top: Math.random() * 100 + "%",
       left: Math.random() * 100 + "%",
       size: Math.random() * 2 + 0.5,
@@ -88,7 +98,7 @@ function Arc({
   blur?: number;
   boxShadow?: string;
   delay: number;
-}) {
+}): React.ReactNode {
   const scale = parseFloat(size) / 100;
   const { axis, enterPct } = VARIANTS[variant];
   const sign = enterPct.startsWith("-") ? -1 : 1;
@@ -113,14 +123,14 @@ function Arc({
   );
 }
 
-export default function HeroBackground() {
+export default function HeroBackground(): React.ReactNode {
   // Fade out smoothly, but wait until 300px of scroll before starting
   const { scrollY } = useScroll();
   const fadeStart = 250;
   const fadeEnd = 800;
 
   const scrollOpacity = useTransform(scrollY, [fadeStart, fadeEnd], [1, 0]);
-  const pointerEvents = useTransform(
+  const pointerEvents = useTransform<number, "auto" | "none">(
     scrollY,
     [fadeStart, fadeEnd],
     ["auto", "none"]
@@ -142,7 +152,7 @@ export default function HeroBackground() {
       style={{
         opacity: scrollOpacity,
         filter: scrollBlur,
-        pointerEvents: pointerEvents as any,
+        pointerEvents,
         y: scrollYMove,
         maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
         WebkitMaskImage:

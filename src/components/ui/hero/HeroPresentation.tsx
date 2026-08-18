@@ -6,8 +6,8 @@ import { ChevronDown } from "lucide-react";
 import TerminalTypewriter from "./TerminalTypewriter";
 import ParticleTitle from "./ParticleTitle";
 
-export default function HeroPresentation() {
-  const handleScrollDown = () => {
+export default function HeroPresentation(): React.ReactNode {
+  const handleScrollDown = (): void => {
     // Scroll to the next section (about me) smoothly, plus a little extra offset
     const aboutSection = document.getElementById("about");
     if (aboutSection) {

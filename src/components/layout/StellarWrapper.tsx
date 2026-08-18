@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { StellarVoid } from "@ajrojasfuentes/stellar-void";
 import "@ajrojasfuentes/stellar-void/dist/styles.css";
 
-export default function StellarWrapper() {
+export default function StellarWrapper(): React.ReactNode {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
+    const checkMobile = (): void => {
       setIsMobile(window.innerWidth <= 768);
     };
     checkMobile(); // Verificar estado inicial
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return (): void => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (

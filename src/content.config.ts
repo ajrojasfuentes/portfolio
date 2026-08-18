@@ -1,5 +1,5 @@
 import { defineCollection } from "astro:content";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 const projects = defineCollection({
@@ -77,6 +77,17 @@ const about = defineCollection({
     cvLink: z.string().optional(),
     phrase: z.string().optional(),
     description: z.string().optional(),
+    skills: z
+      .array(
+        z.object({
+          title: z.string(),
+          color: z.string(),
+          bgColor: z.string(),
+          borderColor: z.string(),
+          skills: z.array(z.string()),
+        })
+      )
+      .optional(),
   }),
 });
 

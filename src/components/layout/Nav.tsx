@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Terminal } from "lucide-react";
 import { NAV_LINKS } from "@/lib/constants";
 
-export default function Nav() {
+export default function Nav(): React.ReactNode {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const onScroll = (): void => {
+      const isScrolled = window.scrollY > 40;
+      setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return (): void => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

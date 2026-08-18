@@ -1,38 +1,10 @@
 ---
+import { getEntry } from "astro:content";
 import SectionHeading from "@/components/ui/SectionHeading.astro";
 import { Reveal } from "@/components/ui/Reveal";
 
-// Dummy hardcoded skills array for now based on the profile
-const skillCategories = [
-  {
-    title: "AI & Data Science",
-    color: "text-purple-400",
-    bgColor: "bg-purple-500/10",
-    borderColor: "border-purple-500/20",
-    skills: ["Machine Learning", "Deep Learning", "Data Engineering", "PyTorch", "TensorFlow", "Pandas", "Scikit-Learn"]
-  },
-  {
-    title: "Languages",
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/10",
-    borderColor: "border-amber-500/20",
-    skills: ["Python", "TypeScript", "JavaScript", "C++", "SQL", "Go"]
-  },
-  {
-    title: "Frontend & Full-Stack",
-    color: "text-sky-400",
-    bgColor: "bg-sky-500/10",
-    borderColor: "border-sky-500/20",
-    skills: ["React", "Astro", "Tailwind CSS", "Next.js", "Node.js", "Express"]
-  },
-  {
-    title: "Cloud & Ops",
-    color: "text-teal-400",
-    bgColor: "bg-teal-500/10",
-    borderColor: "border-teal-500/20",
-    skills: ["GCP", "Docker", "Linux", "Git", "CI/CD", "REST APIs"]
-  }
-];
+const profileEntry = await getEntry("about", "profile");
+const skillCategories = profileEntry?.data.skills ?? [];
 ---
 
 <section id="skills" class="relative py-12 md:py-16">

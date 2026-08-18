@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useReducedMotion = () => {
+const useReducedMotion = (): boolean => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    const handler = (e: MediaQueryListEvent): void => setReduced(e.matches);
     mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    return (): void => mq.removeEventListener("change", handler);
   }, []);
   return reduced;
 };
@@ -20,7 +20,7 @@ export const Reveal = ({
   children: React.ReactNode;
   delay?: number;
   className?: string;
-}) => {
+}): React.ReactNode => {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -43,7 +43,7 @@ export const Reveal = ({
       { threshold: 0.15 }
     );
     if (node) observer.observe(node);
-    return () => {
+    return (): void => {
       if (node) observer.unobserve(node);
     };
   }, [reducedMotion]);

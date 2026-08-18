@@ -26,7 +26,11 @@ const { profile } = Astro.props;
 
 <div
   id="badge-container"
-  class="group relative w-full max-w-[480px] cursor-pointer transition-all duration-500 ease-out hover:-translate-y-0.5"
+  role="button"
+  tabindex="0"
+  aria-label="Voltear credencial de identificación interactiva"
+  aria-pressed="false"
+  class="group relative w-full max-w-[480px] cursor-pointer outline-none transition-all duration-500 ease-out hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-4 focus-visible:ring-offset-slate-950"
   style="perspective: 1200px;"
 >
   <Reveal client:load>
@@ -42,12 +46,12 @@ const { profile } = Astro.props;
 </div>
 
 <style is:global>
-  /* Aplicar fuente Nerd Font DejaVu Sans Mono a TODO el texto del badge */
+  /* Tipografía mono para el badge con fallbacks robustos */
   #badge-card,
   #badge-card * {
     font-family:
-      "DejaVuSansM Nerd Font", "DejaVuSansMono Nerd Font", "DejaVu Sans Mono",
-      monospace !important;
+      "IBM Plex Mono", "JetBrains Mono", "DejaVuSansMono Nerd Font",
+      "DejaVu Sans Mono", monospace !important;
   }
 
   .transform-style-3d {
@@ -156,18 +160,31 @@ const { profile } = Astro.props;
     });
   }
 
-  // 4. Lógica para voltear el gafete (solo flip, sin tilt)
+  // 4. Lógica para voltear el gafete (solo flip, sin tilt) y soporte de teclado
   const badgeContainer = document.getElementById("badge-container");
   const badgeCard = document.getElementById("badge-card");
 
   if (badgeContainer && badgeCard) {
-    badgeContainer.addEventListener("click", () => {
-      badgeCard.classList.toggle("is-flipped");
+    const toggleFlip = (): void => {
+      const isFlipped = badgeCard.classList.toggle("is-flipped");
+      badgeContainer.setAttribute("aria-pressed", isFlipped ? "true" : "false");
+    };
+
+    badgeContainer.addEventListener("click", toggleFlip);
+
+    badgeContainer.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleFlip();
+      }
     });
 
     const contactLinks = document.querySelectorAll(".contact-link");
     contactLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+      link.addEventListener("keydown", (e) => {
         e.stopPropagation();
       });
     });

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const useReducedMotion = () => {
+const useReducedMotion = (): boolean => {
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
+    const handler = (e: MediaQueryListEvent): void => setReduced(e.matches);
     mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
+    return (): void => mq.removeEventListener("change", handler);
   }, []);
   return reduced;
 };
@@ -18,14 +18,14 @@ export const TiltCard = ({
 }: {
   children: React.ReactNode;
   className?: string;
-}) => {
+}): React.ReactNode => {
   const ref = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState(
     "perspective(1000px) rotateX(0deg) rotateY(0deg)"
   );
   const reducedMotion = useReducedMotion();
 
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (reducedMotion || !ref.current) return;
     const { left, top, width, height } = ref.current.getBoundingClientRect();
     if (width === 0 || height === 0) return;
@@ -40,7 +40,7 @@ export const TiltCard = ({
     );
   };
 
-  const handleLeave = () =>
+  const handleLeave = (): void =>
     setTransform(
       "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)"
     );

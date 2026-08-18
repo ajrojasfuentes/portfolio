@@ -13,6 +13,7 @@ export default defineConfig({
       "@/": new URL("./src/", import.meta.url).pathname,
       "@content/": new URL("./src/content/", import.meta.url).pathname,
       "@sk/": new URL("./src/shared-kernel/", import.meta.url).pathname,
+      "astro:content": new URL("./tests/mocks/astro-content.ts", import.meta.url).pathname,
     },
   },
 });

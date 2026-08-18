@@ -63,8 +63,13 @@ const MilestoneNode = ({
 }: {
   entry: TimelineEntry;
   index: number;
-}) => {
-  const cat = CATEGORIES.milestone!;
+}): React.ReactNode => {
+  const cat = CATEGORIES.milestone ?? {
+    label: "Milestone",
+    icon: Flag,
+    color: "#fbbf24",
+    glow: "rgba(251, 191, 36, 0.4)",
+  };
   const Icon = cat.icon;
 
   return (
@@ -111,9 +116,23 @@ const MilestoneNode = ({
   );
 };
 
-const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
-  const cat = CATEGORIES[entry.category] || CATEGORIES.job!;
+const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps): React.ReactNode => {
+  const cat =
+    CATEGORIES[entry.category] ??
+    CATEGORIES.job ?? {
+      label: "Job",
+      icon: Briefcase,
+      color: "#38bdf8",
+      glow: "rgba(56, 189, 248, 0.4)",
+    };
   const Icon = cat.icon;
+
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onFlip();
+    }
+  };
 
   return (
     <div className="group relative z-20 w-full py-2">
@@ -141,9 +160,14 @@ const FlipCard = ({ entry, index, isFlipped, onFlip }: FlipCardProps) => {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
-        className="ml-[50px] w-[calc(100%-66px)] cursor-pointer md:mr-8 md:ml-[100px] md:w-auto md:max-w-[800px]"
+        className="ml-[50px] w-[calc(100%-66px)] cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-sky-400 md:mr-8 md:ml-[100px] md:w-auto md:max-w-[800px]"
         style={{ perspective: "1500px" }}
         onClick={onFlip}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        aria-expanded={isFlipped}
+        aria-label={`Ver detalles de ${entry.role} en ${entry.company}`}
       >
         <motion.div
           className="relative w-full"
@@ -299,10 +323,10 @@ export default function ExperienceTimeline({
   entries,
 }: {
   entries: TimelineEntry[];
-}) {
+}): React.ReactNode {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const handleFlip = (id: string) => {
+  const handleFlip = (id: string): void => {
     setActiveCardId((prev) => (prev === id ? null : id));
   };
 

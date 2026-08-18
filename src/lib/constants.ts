@@ -7,7 +7,7 @@ export const ACCENTS = {
   accomplishments: "#34D399",
 };
 
-export const hexToRgba = (hex: string, alpha = 1) => {
+export const hexToRgba = (hex: string, alpha = 1): string => {
   let clean = hex.replace("#", "");
   if (clean.length === 3) {
     clean = clean

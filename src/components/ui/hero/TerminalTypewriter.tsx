@@ -13,7 +13,7 @@ const PARAGRAPHS = [
 const TYPING_SPEED = 40; // ms per character
 const PAUSE_DURATION = 3000; // ms to wait after typing finishes
 
-export default function TerminalTypewriter() {
+export default function TerminalTypewriter(): React.ReactNode {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
   const [isTyping, setIsTyping] = useState(true);
@@ -28,18 +28,18 @@ export default function TerminalTypewriter() {
       setDisplayedText(currentFullText);
       setIsTyping(false);
 
-      const timer = setTimeout(() => {
+      const timer = setTimeout((): void => {
         setCurrentIndex((prev) => (prev + 1) % PARAGRAPHS.length);
         setIsTyping(true);
       }, PAUSE_DURATION);
-      return () => clearTimeout(timer);
+      return (): void => clearTimeout(timer);
     }
 
     let charIndex = 0;
     setIsTyping(true);
     setDisplayedText(""); // Reset text
 
-    const typingInterval = setInterval(() => {
+    const typingInterval = setInterval((): void => {
       setDisplayedText(currentFullText.slice(0, charIndex + 1));
       charIndex++;
 
@@ -47,13 +47,13 @@ export default function TerminalTypewriter() {
         clearInterval(typingInterval);
         setIsTyping(false);
         // Wait before moving to the next paragraph
-        setTimeout(() => {
+        setTimeout((): void => {
           setCurrentIndex((prev) => (prev + 1) % PARAGRAPHS.length);
         }, PAUSE_DURATION);
       }
     }, TYPING_SPEED);
 
-    return () => {
+    return (): void => {
       clearInterval(typingInterval);
     };
   }, [currentIndex, shouldReduceMotion]);

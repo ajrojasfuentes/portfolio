@@ -1,21 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
-export async function getSortedProjects() {
+export async function getSortedProjects(): Promise<CollectionEntry<"projects">[]> {
   const projects = await getCollection("projects");
   return projects.sort(
-    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+    (a, b) => (a.data.order || 0) - (b.data.order || 0)
   );
 }
 
-export async function getSortedPublications() {
+export async function getSortedPublications(): Promise<CollectionEntry<"publications">[]> {
   const publications = await getCollection("publications");
   return publications.sort(
-    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+    (a, b) => (a.data.order || 0) - (b.data.order || 0)
   );
 }
 
-function parseDateStrings(period: string) {
+export function parseDateStrings(period: string): { start: number; end: number } {
   const parts = period
     .replace(/–/g, "-")
     .split("-")
@@ -23,7 +22,7 @@ function parseDateStrings(period: string) {
   const startStr = parts[0] || "";
   const endStr = parts.length > 1 ? parts[1] || "" : startStr;
 
-  const parseSingle = (str: string) => {
+  const parseSingle = (str: string): number => {
     if (!str) return 0;
     if (str.toLowerCase() === "present") return Infinity;
     const date = new Date(str);
@@ -43,9 +42,9 @@ const CATEGORY_PRIORITY: Record<string, number> = {
   volunteering: 1,
 };
 
-export async function getSortedExperience() {
+export async function getSortedExperience(): Promise<CollectionEntry<"experience">[]> {
   const experience = await getCollection("experience");
-  return experience.sort((a: any, b: any) => {
+  return experience.sort((a, b) => {
     const datesA = parseDateStrings(a.data.period);
     const datesB = parseDateStrings(b.data.period);
 
@@ -64,16 +63,16 @@ export async function getSortedExperience() {
   });
 }
 
-export async function getSortedCertifications() {
+export async function getSortedCertifications(): Promise<CollectionEntry<"certifications">[]> {
   const certifications = await getCollection("certifications");
   return certifications.sort(
-    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+    (a, b) => (a.data.order || 0) - (b.data.order || 0)
   );
 }
 
-export async function getSortedAccomplishments() {
+export async function getSortedAccomplishments(): Promise<CollectionEntry<"accomplishments">[]> {
   const accomplishments = await getCollection("accomplishments");
   return accomplishments.sort(
-    (a: any, b: any) => (a.data.order || 0) - (b.data.order || 0)
+    (a, b) => (a.data.order || 0) - (b.data.order || 0)
   );
 }
