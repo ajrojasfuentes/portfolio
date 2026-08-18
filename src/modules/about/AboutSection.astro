@@ -1,0 +1,47 @@
+---
+import { getEntry } from "astro:content";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { Reveal } from "@/components/ui/Reveal";
+
+const profileEntry = await getEntry("about", "profile");
+if (!profileEntry) {
+  throw new Error("Profile entry not found in src/content/about/profile.mdx");
+}
+---
+
+<section id="about" class="relative py-12 md:py-16">
+  <div class="mx-auto max-w-7xl px-4 md:px-6">
+    <SectionHeading
+      eyebrow="Profile"
+      title="About Me"
+      subtitle="The intersection of software engineering, artificial intelligence, and scientific research."
+      color="#8b5cf6"
+    />
+
+    <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+      <Reveal client:visible>
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300">
+          <p>
+            Hello! I'm <strong class="bg-gradient-to-r from-purple-400 via-indigo-300 to-teal-300 bg-clip-text text-transparent font-bold">Anthony Rojas</strong>, an <strong class="text-white">AI Engineer, Data Engineer, and Full-Stack Developer</strong>. My professional philosophy centers on designing intelligent, adaptable solutions built on robust, scalable software, with a constant focus on optimization, quality, and clean data flow management. Driven by a passion for automating workflows and grounded in a solid foundation of algorithms, systems design, and computer architecture, I'm committed to technical excellence and continuous innovation.
+          </p>
+          
+          <p>
+            I hold a <strong class="text-white">B.S. in Computer Engineering</strong> from the Costa Rica Institute of Technology (TEC) and am currently pursuing an <strong class="text-white">MBA in AI and Data Science</strong> at ENEB. That same academic rigor carries into elite algorithmic problem-solving — I was recognized as a <strong class="text-teal-300">2024 ICPC World Finalist and Regional Champion</strong>.
+          </p>
+        </div>
+      </Reveal>
+
+      <Reveal client:visible delay={0.2}>
+        <div class="prose prose-invert prose-lg max-w-none text-slate-300">
+          <p>
+            I've proven my ability to translate complex theoretical research into efficient, production-ready systems, working as an <strong class="text-purple-300">AI Engineer and ML Research Scientist at CERN's LHCb Experiment</strong> and co-authoring a paper presented at the 7th IEEE BIP Conference 2025, bridging cutting-edge research with applied engineering.
+          </p>
+          
+          <p>
+            In industry, I've designed end-to-end software solutions and automated data pipelines across sectors, comfortable working the full stack from data flow to API layer. As a Data Engineer at <strong class="text-white">CriticalRiver Inc.</strong>, I built real-time pipelines and secure REST APIs; as a Software Engineer at <strong class="text-white">APAMAN</strong>, I built a comprehensive ERP platform from scratch. Whether engineering fault-tolerant systems under production load, automating data workflows, or architecting robust full-stack platforms, I'm dedicated to turning ideas into reality.
+          </p>
+        </div>
+      </Reveal>
+    </div>
+  </div>
+</section>

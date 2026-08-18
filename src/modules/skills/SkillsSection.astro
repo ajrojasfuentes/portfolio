@@ -1,0 +1,66 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import { Reveal } from "@/components/ui/Reveal";
+
+// Dummy hardcoded skills array for now based on the profile
+const skillCategories = [
+  {
+    title: "AI & Data Science",
+    color: "text-purple-400",
+    bgColor: "bg-purple-500/10",
+    borderColor: "border-purple-500/20",
+    skills: ["Machine Learning", "Deep Learning", "Data Engineering", "PyTorch", "TensorFlow", "Pandas", "Scikit-Learn"]
+  },
+  {
+    title: "Languages",
+    color: "text-amber-400",
+    bgColor: "bg-amber-500/10",
+    borderColor: "border-amber-500/20",
+    skills: ["Python", "TypeScript", "JavaScript", "C++", "SQL", "Go"]
+  },
+  {
+    title: "Frontend & Full-Stack",
+    color: "text-sky-400",
+    bgColor: "bg-sky-500/10",
+    borderColor: "border-sky-500/20",
+    skills: ["React", "Astro", "Tailwind CSS", "Next.js", "Node.js", "Express"]
+  },
+  {
+    title: "Cloud & Ops",
+    color: "text-teal-400",
+    bgColor: "bg-teal-500/10",
+    borderColor: "border-teal-500/20",
+    skills: ["GCP", "Docker", "Linux", "Git", "CI/CD", "REST APIs"]
+  }
+];
+---
+
+<section id="skills" class="relative py-12 md:py-16">
+  <div class="mx-auto max-w-7xl px-4 md:px-6">
+    <SectionHeading
+      eyebrow="Expertise"
+      title="Skills & Technologies"
+      subtitle="The technical foundation powering my software and AI solutions."
+      color="#0ea5e9"
+    />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {skillCategories.map((category, idx) => (
+        <Reveal client:visible delay={idx * 0.1}>
+          <div class={`h-full rounded-2xl border p-6 backdrop-blur-sm transition-colors hover:bg-white/5 ${category.borderColor} bg-white/[0.02]`}>
+            <h3 class={`mb-4 font-mono text-sm font-semibold tracking-wider uppercase ${category.color}`}>
+              {category.title}
+            </h3>
+            <ul class="flex flex-wrap gap-2">
+              {category.skills.map((skill) => (
+                <li class={`inline-flex items-center rounded-lg border px-2.5 py-1 text-sm font-medium text-slate-300 shadow-sm transition-all hover:scale-105 ${category.borderColor} ${category.bgColor}`}>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </div>
+</section>

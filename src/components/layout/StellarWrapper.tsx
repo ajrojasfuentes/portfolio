@@ -19,11 +19,11 @@ export default function StellarWrapper() {
       batterySaver={isMobile}
       config={{
         constellations: {
-          starsCount: 150,
+          starsCount: 200,
           starsSize: { min: 0.5, max: 2 },
-          starsOpacity: { min: 0.3, max: 0.8 },
+          starsOpacity: { min: 0.4, max: 0.95 },
           starsSpeed: 0.1,
-          linksDistance: 85,
+          linksDistance: 100,
           linksOpacity: 0.25,
           linksWidth: 0.5,
           interactivity: {
