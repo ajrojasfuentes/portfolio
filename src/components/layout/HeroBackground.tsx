@@ -116,8 +116,8 @@ function Arc({
 export default function HeroBackground() {
   // Fade out smoothly, but wait until 300px of scroll before starting
   const { scrollY } = useScroll();
-  const fadeStart = 500;
-  const fadeEnd = 1000;
+  const fadeStart = 250;
+  const fadeEnd = 800;
 
   const scrollOpacity = useTransform(scrollY, [fadeStart, fadeEnd], [1, 0]);
   const pointerEvents = useTransform(
@@ -128,9 +128,9 @@ export default function HeroBackground() {
   const scrollBlur = useTransform(
     scrollY,
     [fadeStart, fadeEnd],
-    ["blur(0px)", "blur(20px)"]
+    ["blur(0px)", "blur(40px)"]
   );
-  const linesOpacity = useTransform(scrollY, [fadeStart, fadeEnd], [0, 0.4]);
+  const linesOpacity = useTransform(scrollY, [fadeStart, fadeEnd], [0, 0.5]);
   // Parallax effect starts immediately but moves smoothly over the longer distance
   const scrollYMove = useTransform(scrollY, [0, fadeEnd], [0, -350]);
 
@@ -144,6 +144,9 @@ export default function HeroBackground() {
         filter: scrollBlur,
         pointerEvents: pointerEvents as any,
         y: scrollYMove,
+        maskImage: "linear-gradient(to bottom, black 70%, transparent 100%)",
+        WebkitMaskImage:
+          "linear-gradient(to bottom, black 70%, transparent 100%)",
       }}
       className="fixed inset-0 z-0 overflow-hidden bg-black"
     >
