@@ -40,7 +40,7 @@ function FloatingStars(): React.ReactNode {
       top: Math.random() * 100 + "%",
       left: Math.random() * 100 + "%",
       size: Math.random() * 2 + 0.5,
-      duration: Math.random() * 30 + 30, // Very slow: 30s to 60s
+      duration: Math.random() * 30 + 30,
       xMove: (Math.random() - 0.5) * 150,
       yMove: (Math.random() - 0.5) * 150,
       baseOpacity: Math.random() * 0.5 + 0.1,
@@ -54,7 +54,7 @@ function FloatingStars(): React.ReactNode {
   return (
     <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
       {stars.map((star, i) => (
-        <motion.div
+        <div
           key={i}
           className="absolute rounded-full bg-white"
           style={{
@@ -62,19 +62,12 @@ function FloatingStars(): React.ReactNode {
             left: star.left,
             width: star.size,
             height: star.size,
-            boxShadow: `0 0 ${star.size * 2}px rgba(255, 255, 255, 0.8)`,
-          }}
-          initial={{ opacity: star.baseOpacity, x: 0, y: 0 }}
-          animate={{
-            opacity: [star.baseOpacity, 1, star.baseOpacity],
-            x: star.xMove,
-            y: star.yMove,
-          }}
-          transition={{
-            duration: star.duration,
-            repeat: Infinity,
-            repeatType: "mirror",
-            ease: "easeInOut",
+            willChange: "transform, opacity",
+            ["--star-x" as string]: `${star.xMove}px`,
+            ["--star-y" as string]: `${star.yMove}px`,
+            ["--star-opacity-min" as string]: star.baseOpacity,
+            ["--star-opacity-max" as string]: 1,
+            animation: `float-star ${star.duration}s ease-in-out infinite alternate`,
           }}
         />
       ))}
@@ -169,21 +162,11 @@ export default function HeroBackground(): React.ReactNode {
         }}
       />
       <FloatingStars />
-      <motion.div
+      <div
         className="absolute inset-0 h-full w-full"
-        animate={{
-          opacity: [0.85, 1, 0.85],
-          filter: [
-            "brightness(1) hue-rotate(0deg)",
-            "brightness(1.25) hue-rotate(25deg)",
-            "brightness(1) hue-rotate(0deg)",
-          ],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-          times: [0, 0.5, 1],
+        style={{
+          animation: "arc-shimmer 10s ease-in-out infinite",
+          willChange: "filter, opacity",
         }}
       >
         <motion.div
@@ -236,7 +219,7 @@ export default function HeroBackground(): React.ReactNode {
             delay={0}
           />
         </motion.div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

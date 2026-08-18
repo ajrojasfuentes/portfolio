@@ -96,3 +96,71 @@ section[id] {
 .animate-blob {
   animation: blob infinite alternate ease-in-out;
 }
+
+/* ── Hero Optimizations ─────────────────────────────── */
+
+/* Shared noise/grain texture (DRY: used by BentoCard, IdCardFront, IdCardBack) */
+.texture-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E");
+}
+
+/* Floating stars animation (replaces 40 Framer Motion instances) */
+@keyframes float-star {
+  0% {
+    transform: translate(var(--star-x, 0px), var(--star-y, 0px));
+    opacity: var(--star-opacity-min, 0.1);
+  }
+  50% {
+    opacity: var(--star-opacity-max, 1);
+  }
+  100% {
+    transform: translate(calc(var(--star-x, 0px) * -1), calc(var(--star-y, 0px) * -1));
+    opacity: var(--star-opacity-min, 0.1);
+  }
+}
+
+/* Arc shimmer animation (replaces Framer Motion filter animation) */
+@keyframes arc-shimmer {
+  0%, 100% {
+    opacity: 0.85;
+    filter: brightness(1) hue-rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.25) hue-rotate(25deg);
+  }
+}
+
+/* Entrance animations (replaces Framer Motion staggered entrance in Bento cards) */
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

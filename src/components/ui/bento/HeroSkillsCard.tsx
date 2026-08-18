@@ -23,7 +23,7 @@ import {
   Shield,
   Boxes,
 } from "lucide-react";
-import { motion } from "framer-motion";
+
 
 interface SkillItem {
   name: string;
@@ -133,16 +133,12 @@ export const HeroSkillsCard: React.FC = () => {
               {category.skills.map((skill, skillIdx) => {
                 const Icon = skill.icon;
                 return (
-                  <motion.div
+                  <div
                     key={skill.name}
-                    initial={{ opacity: 0, x: -6 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      delay: 0.04 * (catIdx * 5 + skillIdx),
-                      duration: 0.3,
+                    className="flex items-center gap-2 rounded-lg px-2 py-1 font-mono text-xs text-slate-300 transition-all hover:translate-x-0.5 hover:bg-white/5 hover:text-white"
+                    style={{
+                      animation: `fade-slide-left 0.3s ease-out ${0.04 * (catIdx * 5 + skillIdx)}s both`,
                     }}
-                    whileHover={{ x: 2 }}
-                    className="flex items-center gap-2 rounded-lg px-2 py-1 font-mono text-xs text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
                   >
                     <Icon
                       size={13}
@@ -151,7 +147,7 @@ export const HeroSkillsCard: React.FC = () => {
                     <span className="truncate text-[11px] font-light tracking-tight">
                       {skill.name}
                     </span>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>

@@ -8,7 +8,7 @@ import {
   Cpu,
   Layers,
 } from "lucide-react";
-import { motion } from "framer-motion";
+
 
 interface ProfileProps {
   name: string;
@@ -99,17 +99,16 @@ export const HeroBioCard: React.FC<{ profile: ProfileProps }> = ({
           {coreSkills.map((skill, index) => {
             const Icon = skill.icon;
             return (
-              <motion.span
+              <span
                 key={skill.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * index, duration: 0.3 }}
-                whileHover={{ scale: 1.05 }}
-                className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 font-mono text-xs tracking-wide ${skill.color} shadow-sm backdrop-blur-md transition-all`}
+                className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1 font-mono text-xs tracking-wide ${skill.color} shadow-sm transition-all hover:scale-105`}
+                style={{
+                  animation: `fade-scale-in 0.3s ease-out ${0.1 * index}s both`,
+                }}
               >
                 <Icon size={12} />
                 {skill.label}
-              </motion.span>
+              </span>
             );
           })}
         </div>

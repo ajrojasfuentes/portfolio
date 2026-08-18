@@ -1,7 +1,7 @@
 import React from "react";
 import { BentoCard } from "./BentoCard";
 import { Atom, Trophy, Zap, ShieldCheck, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+
 
 interface HighlightItem {
   icon: React.ElementType;
@@ -72,14 +72,13 @@ export const HeroHighlightsCard: React.FC = () => {
         {highlights.map((item, index) => {
           const Icon = item.icon;
           return (
-            <motion.a
+            <a
               key={item.title}
               href={item.link}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08 * index + 0.1, duration: 0.4 }}
-              whileHover={{ y: -3, scale: 1.01 }}
-              className={`group/card relative flex flex-col justify-between rounded-xl border border-white/10 bg-slate-950/40 p-4 transition-all duration-300 ${item.borderColor} hover:bg-slate-900/60 hover:shadow-lg`}
+              className={`group/card relative flex flex-col justify-between rounded-xl border border-white/10 bg-slate-950/40 p-4 transition-all duration-300 hover:-translate-y-[3px] hover:scale-[1.01] ${item.borderColor} hover:bg-slate-900/60 hover:shadow-lg`}
+              style={{
+                animation: `fade-slide-up 0.4s ease-out ${0.08 * index + 0.1}s both`,
+              }}
             >
               <div>
                 <div className="mb-2.5 flex items-center justify-between">
@@ -103,7 +102,7 @@ export const HeroHighlightsCard: React.FC = () => {
                   {item.desc}
                 </p>
               </div>
-            </motion.a>
+            </a>
           );
         })}
       </div>

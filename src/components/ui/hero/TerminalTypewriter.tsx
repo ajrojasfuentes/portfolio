@@ -6,7 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 const PARAGRAPHS = [
   "AI Engineer, Data Engineer, and Full-Stack Developer. I design automated data pipelines, build production-grade AI systems, and architect end-to-end software platforms.",
   "Bridging theoretical computer science with elite software engineering and modern AI. Building custom, production-ready systems engineered for uncompromising optimization, scalability, and uptime.",
-  "I work with organizations to turn bold ideas into robust, valuable, production-ready infrastructure, bringing scientific depth, fresh innovation, and relentless execution to help teams de-risk complex technical challenges.",
+  "Working with organizations to turn bold ideas into robust, high quality infrastructure, bringing scientific depth, fresh innovation, and relentless execution to de-risk complex technical challenges.",
   "I empower startups and enterprises to unlock their full potential, turning problems into innovation, and ideas into reality.",
 ];
 
